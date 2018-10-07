@@ -5,18 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <style>
-  #map {  width: 100%;  height: 660px;}
+  body {font-family: sans-serif;}
+  #map {width: 100%;  height: 660px;}
 </style>
 </head>
 <body>
   <div id="topControl">
-  <ul class="list-unstyled">
-  
-    <li><input type="radio" name="select_layer" id="select_conform" value="conform"><label for="select_conform"><span class="glyphicon glyphicon-ok-circle"></span> Conforme cu legea</label></li>
-    <li><input type="radio" name="select_layer" id="select_total" value="total"><label for="select_total"><span class="glyphicon glyphicon-plus-sign"></span> Scor total</label></li>
-  </ul>
-</div>
-<span onclick="zx('lala')">ss</span>
+    <form name="layerSwitch">
+      <label><input type="radio" name="xlayers" value="06_10" checked=checked /> 06.10 @10</label>
+      <label><input type="radio" name="xlayers" value="06_13" /> 06.10 @13</label>
+      <label><input type="radio" name="xlayers" value="06_16" /> 06.10 @16</label>
+      <label><input type="radio" name="xlayers" value="06_19" /> 06.10 @19</label>
+      <label><input type="radio" name="xlayers" value="06_21" /> 06.10 @21</label>
+    </form>
+    <div id="controlInfo">x</div>
+    </div>
+
 <div id="map"></div>
 
 <link rel="stylesheet" href="app/assets/vendor/leaflet/leaflet.css" />
@@ -51,26 +55,68 @@ new L.Control.Zoom({ position: 'topright' }).addTo(map);
 L.tileLayer.provider('CartoDB.Positron').addTo(map);
 
 function layerStyle(feature) {
+
+  // var options = document.getElementsByName("xlayers");
+  // if (options) {
+  //     for (var i = 0; i < options.length; i++) {
+  //         if (options[i].checked){
+  //              console.log(options[i].value);
+  //         }
+  //     }
+  // }
+
+
   var selectedLayer = 'total';
   // selectedLayer = $("input:radio[name='select_layer']:checked").val();
+  selectedLayer=document.getElementById('controlInfo').getAttribute("ts");
   var xStyle = {weight: 2,fillOpacity: 0.9,stroke: true};
-  xStyle.radius = 1;
+  // xStyle.radius = 3;
+
   xStyle.color = "White";
-xStyle.fillColor = "MediumSlateBlue"
+
+  xStyle.fillColor = "MediumSlateBlue"
+  // xStyle.radius = 3;
+  xStyle.radius=Math.round(feature.props.pe_lista/500) + 1;
+// console.log(feature.props.nume_sectie + ' - ' + (Math.round(feature.props.pe_lista / 100) + 1));
+// console.log(round(feature.props.pe_lista));
+
+// if (feature=='lala'){
+//   xStyle.fillColor = "Red"
+// }
+// else {xStyle.fillColor = "MediumSlateBlue"}
+
+  // switch (selectedLayer) {
+  //   case label1:
+  //       code to be executed if n=label1;
+  //       break;
+  //   case label2:
+  //       code to be executed if n=label2;
+  //       break;
+  //   case label3:
+  //       code to be executed if n=label3;
+  //       break;
+  //   ...
+  //   default:
+  //       code to be executed if n is different from all labels;
+  // }
+
+
+
+
     // if (selectedLayer == 'vizibil') {
-    //   xStyle.radius = feature.properties.viz * 1  + 2 ;
-    //   if (feature.properties.viz != 0)
+    //   xStyle.radius = feature.props.viz * 1  + 2 ;
+    //   if (feature.props.viz != 0)
     //     xStyle.fillColor = "MediumSlateBlue";
     //       else { xStyle.fillColor = "White"; xStyle.color = "Black";  xStyle.radius = 3;} 
     // }
     //   else if (selectedLayer == 'conform')  {
-    //     xStyle.radius = feature.properties.cf * 1 + 1;
-    //     if (feature.properties.cf != 0)
+    //     xStyle.radius = feature.props.cf * 1 + 1;
+    //     if (feature.props.cf != 0)
     //       xStyle.fillColor = "Green";
     //         else {xStyle.fillColor = "White"; xStyle.color = "Black";   xStyle.radius = 3;}
     //   }
     //     else  if (selectedLayer == 'total') {
-    //       xStyle.radius = (feature.properties.viz * 1  + feature.properties.cf * 1);
+    //       xStyle.radius = (feature.props.viz * 1  + feature.props.cf * 1);
     //       xStyle.fillColor = "Orange";
     //       if (xStyle.radius == 0) {
     //         xStyle.fillColor = "White"; xStyle.color = "Black";   xStyle.radius = 3;
@@ -87,8 +133,8 @@ geojsonLayer.on("layeradd", function(e) {
     feature = marker.feature;
 
   // Create custom popup content
-    var out = "<h4>" +  feature.properties.nume  + "</h4>";
-    out = out + "Rapoarte publicate: <b>" +  feature.properties.viz + "</b><br>Conforme cu legea: <b>" + feature.properties.cf + "</b>";
+    var out = "<h4>" +  feature.props.nume_sectie  + "</h4>";
+    out = out + "Rapoarte publicate: <b>" +  feature.props.localitate + "</b><br>Pe lista: <b>" + feature.props.pe_lista + "</b>";
     var popupContent = out;
 
   // http://leafletjs.com/reference.html#popup
@@ -98,14 +144,16 @@ geojsonLayer.on("layeradd", function(e) {
   });
 });
 
-// $("#topControl input:radio[name='select_layer']" ).change(function() {
-//   // console.log ($("#topControl input:radio[name='select_layer']:checked").val());
-//   geojsonLayer.setStyle(layerStyle)
-// });
-function zx(what){
-  // alert(what)
-  geojsonLayer.setStyle(what);
-}
+  //  read select
+  var rad = document.layerSwitch.xlayers;
+  for(var i = 0; i < rad.length; i++) {
+      rad[i].onclick = function() {
+        geojsonLayer.setStyle(layerStyle);
+        document.getElementById('controlInfo').innerHTML=this.value;
+        document.getElementById('controlInfo').setAttribute("ts", this.value);
+      };
+  }
+
 </script>
  
 
