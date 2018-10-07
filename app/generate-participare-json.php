@@ -22,10 +22,13 @@ foreach ($csv as $timestamp => $oneCsv) {
   // $masterData[$timestamp]=[];
   foreach ($oneCsv as $rowno => $row) {
     // pr($row);
+    // break;
     $masterData[$row['Siruta']][$row['Nr sectie de votare']]['nume sectie']=$row['Nume sectie de votare'];
     $masterData[$row['Siruta']]['localitate']=$row['Localitate'];
     $masterData[$row['Siruta']]['county']=$row['﻿Judet'];
     $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['pe lista']=$row['Votanti lista'];
+    $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['nume sectie']=$row['Nume sectie de votare'];
+    // $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['nume']=$row['Votanti lista'];
     $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['ts'][$timestamp]['LP']=$row['LP'];
     $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['ts'][$timestamp]['LS']=$row['LS'];
     $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['ts'][$timestamp]['UM']=$row['UM'];
