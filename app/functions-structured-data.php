@@ -178,5 +178,5 @@ function array_to_csv($arr, $path_to_csv) {
 	    fputcsv($fp, $fields);
 	}
 	fclose($fp);
-	echo '<p><b>'.human_filesize(filesize($path_to_csv)).'</b> → <em>'.$path_to_csv.'</em></p>';
+	echo '<p><b>'.human_filesize(filesize($path_to_csv)).'</b> → <em>'.basename($path_to_csv).'</em></p>';
 }
