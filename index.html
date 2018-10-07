@@ -24,19 +24,43 @@
     background-color: LightYellow;
   }
   #topControl .formControl label:hover{
-    background-color: MistyRose;
+    background-color: rgba(0,0,0,.05); 
   }
-  #topControl .formControl input + label{
+  #topControl .formControl label{
     cursor: pointer;
     padding: 2px;
     display: inline-block;
     min-width: 5em;
+    color: DarkGoldenrod;
+    /*font-weight: 200;*/
   }
+
+ #topControl .formControl label:before{
+   content: '\26F6';
+          position: absolute`;
+          background-color: LightYellow;
+          margin-top: -2px;
+          margin-left: -2em;
+          padding: 3px;
+          padding-right: 1ex;
+ }
+  #topControl .formControl input:checked + label:before {
+            content: '\26DD';
+            color: Black;
+          }
   #topControl .formControl input:checked + label{
-    color: SlateBlue;
-    background-color: AntiqueWhite;
+    color: Maroon;
   }
+  .formControl .title {
+    text-transform: uppercase;
+    font-size: 11px;
+    display: block;
+    padding-bottom: 3px;
+    opacity: .6;
+  }  
+
   #controlInfo{
+    display: none;
     font-size: 12px;
   }
 </style>
@@ -44,6 +68,7 @@
 <body>
   <div id="topControl">
     <form id="timestamp" name="timestamp" class="formControl">
+      <span class="title">Timestamps</span>
       <div><input type="radio" name="xlayers" id="06_10" value="06_10" checked=checked /> <label for="06_10">S @10</label></div>
       <div><input type="radio" name="xlayers" id="06_13" value="06_13" /> <label for="06_13">S @13</label></div>
       <div><input type="radio" name="xlayers" id="06_16" value="06_16" /> <label for="06_16">S @16</label></div>
@@ -52,13 +77,14 @@
       <div><input type="radio" name="xlayers" id="07_10" value="07_10" /> <label for="07_10">D @10</label></div>
     </form>
     <form id="varSwitch" name="varSwitch" class="formControl">
+      <span class="title">Vars</span>
       <div><input type="radio" name="xvars" id="LS" value="LS" checked=checked /> <label for="LS">LS</label></div>
       <div><input type="radio" name="xvars" id="LP" value="LP" /> <label for="LP">LP</label></div>
       <div><input type="radio" name="xvars" id="UM" value="UM" /> <label for="UM">UM</label></div>
-      <!-- <div><input type="radio" name="xvars" id="LT" value="LT" /> <label for="LT">total</label></div> -->
+      <div><input type="radio" name="xvars" id="LT" value="LT" /> <label for="LT">LT</label></div>
       <!-- <div><input type="radio" name="xvars" id="muchextra" value="muchextra" /> <label for="muchextra">muchextra</label></div> -->
       <div><input type="radio" name="xvars" id="dead" value="dead" /> <label for="dead">dead</label></div>
-      <div><input type="radio" name="xvars" id="ghost" value="ghost" /> <label for="ghost">LT&lt;5</label></div>
+      <div><input type="radio" name="xvars" id="ghost" value="ghost" /> <label for="ghost">ghosts</label></div>
       <!-- <div><input type="radio" name="xvars" id="extremes" value="extremes" /> <label for="extremes">records</label></div> -->
      <!--  <hr>
      <small> muchextra: LT-(LP+LS+UM)
