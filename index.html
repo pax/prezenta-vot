@@ -14,32 +14,41 @@
     padding: 1ex;
     font-size: 14px;
     max-width: 7em;
-    border:1ex solid White; 
+    border:1ex solid White;
 
     z-index:2;
     background-color: LightYellow;
   }
-  #topControl #layerSwitch label:hover{
+  #topControl .formControl label:hover{
     background-color: Yellow;
   }
-  #topControl #layerSwitch input + label{
+  #topControl .formControl input + label{
     cursor: pointer;
+    padding: 2px;
   }
-  #topControl #layerSwitch input:checked + label{
+  #topControl .formControl input:checked + label{
     color: red;
+    background-color: Yellow;
   }
 </style>
 </head>
 <body>
   <div id="topControl">
-    <form id="layerSwitch" name="layerSwitch">
+    <form id="timestamp" name="timestamp" class="formControl">
       <div><input type="radio" name="xlayers" id="06_10" value="06_10" checked=checked /> <label for="06_10">06.10 @10</label></div>
       <div><input type="radio" name="xlayers" id="06_13" value="06_13" /> <label for="06_13">06.10 @13</label></div>
       <div><input type="radio" name="xlayers" id="06_16" value="06_16" /> <label for="06_16">06.10 @16</label></div>
       <div><input type="radio" name="xlayers" id="06_19" value="06_19" /> <label for="06_19">06.10 @19</label></div>
       <div><input type="radio" name="xlayers" id="06_21" value="06_21" /> <label for="06_21">06.10 @21</label></div>
     </form>
-    LP LS UM LT-(LP+LS+UM)
+    <form id="varSwitch" name="varSwitch" class="formControl">
+      <div><input type="radio" name="xvars" id="LS" value="LS" checked=checked /> <label for="LS">LS</label></div>
+      <div><input type="radio" name="xvars" id="LP" value="LP" /> <label for="LP">LP</label></div>
+      <div><input type="radio" name="xvars" id="UM" value="UM" /> <label for="UM">UM</label></div>
+      <div><input type="radio" name="xvars" id="LT" value="LT" /> <label for="LT">LT</label></div>
+      <div><input type="radio" name="xvars" id="zeroes" value="zeroes" /> <label for="zeroes">zeroes</label></div>
+
+    </form>
 
     <div id="controlInfo" ts="06_10">x</div>
     </div>
@@ -52,7 +61,7 @@
   <script src="app/assets/vendor/leaflet/leaflet.ajax.min.js"></script>
   <script src="app/assets/vendor/leaflet/leaflet-providers.js"></script>
   <script src="app/assets/vendor/leaflet/leaflet.label.js"></script>
- 
+
 <script>
   var geojsonLayer = new L.GeoJSON.AJAX("data/generated/localitati.json",
   {
@@ -78,77 +87,11 @@ new L.Control.Zoom({ position: 'topright' }).addTo(map);
 L.tileLayer.provider('CartoDB.Positron').addTo(map);
 
 function layerStyle(feature) {
-
-  // var options = document.getElementsByName("xlayers");
-  // if (options) {
-  //     for (var i = 0; i < options.length; i++) {
-  //         if (options[i].checked){
-  //              console.log(options[i].value);
-  //         }
-  //     }
-  // }
-
-
-  // var selectedLayer = 'total';
-  // selectedLayer = $("input:radio[name='select_layer']:checked").val();
   selectedLayer=document.getElementById('controlInfo').getAttribute("ts");
-  // selectedLayer=typeof document.getElementById('controlInfo').getAttribute("ts") !== 'undefined' ? document.getElementById('controlInfo').getAttribute("ts") : "06_10";
   var xStyle = {weight: 2,fillOpacity: 0.9,stroke: true};
   xStyle.color = "White";
   xStyle.fillColor = "MediumSlateBlue"
-  // xStyle.radius = 3;
-  // xStyle.radius=Math.round(feature.props.pe_lista/500) + 1;
-  // xx=feature.props.ts[selectedLayer];
-  // console.log(selectedLayer);
-  // console.log(feature.props.ts[selectedLayer].LS);
-
   xStyle.radius=Math.round(feature.props.ts[selectedLayer].LS/10,0);
-// console.log(feature.props.nume_sectie + ' - ' + (Math.round(feature.props.pe_lista / 100) + 1));
-// console.log(round(feature.props.pe_lista));
-
-// if (feature=='lala'){
-//   xStyle.fillColor = "Red"
-// }
-// else {xStyle.fillColor = "MediumSlateBlue"}
-
-  // switch (selectedLayer) {
-  //   case label1:
-  //       code to be executed if n=label1;
-  //       break;
-  //   case label2:
-  //       code to be executed if n=label2;
-  //       break;
-  //   case label3:
-  //       code to be executed if n=label3;
-  //       break;
-  //   ...
-  //   default:
-  //       code to be executed if n is different from all labels;
-  // }
-
-
-
-
-    // if (selectedLayer == 'vizibil') {
-    //   xStyle.radius = feature.props.viz * 1  + 2 ;
-    //   if (feature.props.viz != 0)
-    //     xStyle.fillColor = "MediumSlateBlue";
-    //       else { xStyle.fillColor = "White"; xStyle.color = "Black";  xStyle.radius = 3;} 
-    // }
-    //   else if (selectedLayer == 'conform')  {
-    //     xStyle.radius = feature.props.cf * 1 + 1;
-    //     if (feature.props.cf != 0)
-    //       xStyle.fillColor = "Green";
-    //         else {xStyle.fillColor = "White"; xStyle.color = "Black";   xStyle.radius = 3;}
-    //   }
-    //     else  if (selectedLayer == 'total') {
-    //       xStyle.radius = (feature.props.viz * 1  + feature.props.cf * 1);
-    //       xStyle.fillColor = "Orange";
-    //       if (xStyle.radius == 0) {
-    //         xStyle.fillColor = "White"; xStyle.color = "Black";   xStyle.radius = 3;
-    //       }
-    //     }
-// console.log('lala');
 return xStyle;
 }
 
@@ -164,7 +107,6 @@ geojsonLayer.on("layeradd", function(e) {
     // out += JSON.stringify(feature.props.ts, null, 2)
     var popupContent = out;
 
-  // http://leafletjs.com/reference.html#popup
   marker.bindPopup(popupContent,{
     closeButton: true,
     minWidth: 200
@@ -172,7 +114,7 @@ geojsonLayer.on("layeradd", function(e) {
 });
 
   //  read select
-  var rad = document.layerSwitch.xlayers;
+  var rad = document.timestamp.xlayers;
   for(var i = 0; i < rad.length; i++) {
       rad[i].onclick = function() {
         let selectedLayer=this.value;
@@ -183,8 +125,7 @@ geojsonLayer.on("layeradd", function(e) {
   }
 
 </script>
- 
+
 
  </body>
 </html>
- 
