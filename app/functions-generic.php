@@ -6,7 +6,7 @@ function saveFile($data, $path_to_file)
   if ($ret === false) {
     die('There was an error writing this file');
   } else {
-    echo round($ret/1024000,2)." Mb → ".$path_to_file." ";
+    echo round($ret/1024000,2)." Mb → ".basename($path_to_file)." ";
   }
 }
 
