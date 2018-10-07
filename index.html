@@ -18,6 +18,8 @@
       <label><input type="radio" name="xlayers" value="06_19" /> 06.10 @19</label>
       <label><input type="radio" name="xlayers" value="06_21" /> 06.10 @21</label>
     </form>
+    LP LS UM LT-(LP+LS+UM)
+
     <div id="controlInfo">x</div>
     </div>
 
@@ -66,17 +68,20 @@ function layerStyle(feature) {
   // }
 
 
-  var selectedLayer = 'total';
+  // var selectedLayer = 'total';
   // selectedLayer = $("input:radio[name='select_layer']:checked").val();
-  selectedLayer=document.getElementById('controlInfo').getAttribute("ts");
+  var selectedLayer='06_10';
+  // selectedLayer=document.getElementById('controlInfo').getAttribute("ts");
   var xStyle = {weight: 2,fillOpacity: 0.9,stroke: true};
-  // xStyle.radius = 3;
-
   xStyle.color = "White";
-
   xStyle.fillColor = "MediumSlateBlue"
   // xStyle.radius = 3;
-  xStyle.radius=Math.round(feature.props.pe_lista/500) + 1;
+  // xStyle.radius=Math.round(feature.props.pe_lista/500) + 1;
+  // xx=feature.props.ts[selectedLayer];
+  // console.log(selectedLayer);
+  // console.log(feature.props.ts[selectedLayer].LS);
+
+  xStyle.radius=Math.round(feature.props.ts[selectedLayer].LS/4,0);
 // console.log(feature.props.nume_sectie + ' - ' + (Math.round(feature.props.pe_lista / 100) + 1));
 // console.log(round(feature.props.pe_lista));
 
@@ -134,7 +139,8 @@ geojsonLayer.on("layeradd", function(e) {
 
   // Create custom popup content
     var out = "<h4>" +  feature.props.nume_sectie  + "</h4>";
-    out = out + "Rapoarte publicate: <b>" +  feature.props.localitate + "</b><br>Pe lista: <b>" + feature.props.pe_lista + "</b>";
+    out +=   "<b>" +  feature.props.localitate + "</b><br>Înscriși pe lista: <b>" + feature.props.pe_lista + "</b>";
+    // out += JSON.stringify(feature.props.ts, null, 2)
     var popupContent = out;
 
   // http://leafletjs.com/reference.html#popup
@@ -148,6 +154,7 @@ geojsonLayer.on("layeradd", function(e) {
   var rad = document.layerSwitch.xlayers;
   for(var i = 0; i < rad.length; i++) {
       rad[i].onclick = function() {
+        let selectedLayer=this.value;
         geojsonLayer.setStyle(layerStyle);
         document.getElementById('controlInfo').innerHTML=this.value;
         document.getElementById('controlInfo').setAttribute("ts", this.value);
