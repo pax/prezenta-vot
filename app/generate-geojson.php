@@ -29,6 +29,8 @@ $geojson->type='FeatureCollection';
 $geojson->features=[];
 foreach ($participare_obj as $siruta => $one_loc) {
   if (isset($gis_arr[$siruta])) {
+    // pr($participare_obj->$siruta);
+    // break;
   $onePoint= new \stdClass();
   $onePoint->type='Feature';
   $onePoint->geometry=new \stdClass();
@@ -36,27 +38,30 @@ foreach ($participare_obj as $siruta => $one_loc) {
   // $onePoint->geometry->coordinates = isset($gis_arr[$siruta]) ? $gis_arr[$siruta]['coordinates'] : 'no coords:'.$siruta;
   $onePoint->geometry->coordinates = isset($gis_arr[$siruta]) ? $gis_arr[$siruta]['coordinates'] : null;
   $onePoint->props=new \stdClass();
-  $onePoint->props->nume_sectie=$participare_obj->$siruta->{'Nr sectie de votare'}->{'nume sectie'};
-  $onePoint->props->nr_sectie=$participare_obj->$siruta->{'Nr sectie de votare'}->{'nr sectie'};
-  $onePoint->props->localitate=$participare_obj->$siruta->{'Nr sectie de votare'}->{'localitate'};
-  $onePoint->props->jud=$participare_obj->$siruta->{'Nr sectie de votare'}->{'county'};
-  $onePoint->props->pe_lista=$participare_obj->$siruta->{'Nr sectie de votare'}->{'pe lista'};
-  $onePoint->props->ts = new \stdClass();
+  
+  foreach ($participare_obj->$siruta->sectii as $nr_sectie => $oSectie) {
 
-  foreach ($participare_obj->$siruta->{'Nr sectie de votare'}->ts as $xts => $participare) {
+  // $onePoint->props->localitate=$participare_obj->$siruta->{'Nr sectie de votare'}->{'localitate'};
+  // $onePoint->props->jud=$participare_obj->$siruta->{'Nr sectie de votare'}->{'county'};
 
-    // $onePoint->props->ts = new \stdClass();
-    // if (!isset( $onePoint->props->ts->$xts)) $onePoint->props->ts->$xts = new stdClass();
-// echo $xts;
-    $onePoint->props->ts->$xts = new stdClass();
-    foreach ($participare as $xkey => $value) {
-      // echo $siruta.'-'.$onePoint->props->nume_sectie.' - '.$xts.' '.$key.' '.$value.'<br>';
+    $onePoint->props->$siruta =new \stdClass();
+    $onePoint->props->$siruta->sectii =new \stdClass();
+    $onePoint->props->$siruta->sectii->$nr_sectie =new \stdClass();
+    $onePoint->props->$siruta->sectii->$nr_sectie->nume_sectie=$oSectie->{'nume sectie'};
+    $onePoint->props->$siruta->sectii->$nr_sectie->pe_lista=$oSectie->{'pe lista'};
+    $onePoint->props->$siruta->sectii->$nr_sectie->ts = new \stdClass();
+    // pr($oSectie);
+    // break;
 
-      // echo $siruta.'-'.$onePoint->props->nume_sectie.'--xts '.$xts.' key '.$xkey.' val '.$value.'<br>';
-      $onePoint->props->ts->$xts->$xkey=$value;
+    foreach ($oSectie->ts as $xts => $participare) {
+      $onePoint->props->$siruta->sectii->$nr_sectie->ts->$xts = new stdClass();
+      foreach ($participare as $xkey => $value) {
+        $onePoint->props->$siruta->sectii->$nr_sectie->ts->$xts->$xkey=$value;
+      }
     }
-    // pr($onePoint->props);
   }
+  
+ 
   array_push($geojson->features, $onePoint);
   // unset($onePoint);
   }
