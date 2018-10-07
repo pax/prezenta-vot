@@ -7,6 +7,10 @@
 <style>
   body {font-family: sans-serif; margin: 0; padding: 0;}
   #map {width: 100%;   height: 660px;}
+    #map.leaflet-container {
+    background-image: url("app/assets/img/loader-bcg.gif");
+    /*background-image: url("app/assets/img/vc-bcg-2018.svg");*/
+    background-size: contain; }
   #topControl{
     position: absolute;
     top: 1em;
@@ -20,37 +24,52 @@
     background-color: LightYellow;
   }
   #topControl .formControl label:hover{
-    background-color: Yellow;
+    background-color: MistyRose;
   }
   #topControl .formControl input + label{
     cursor: pointer;
     padding: 2px;
+    display: inline-block;
+    min-width: 5em;
   }
   #topControl .formControl input:checked + label{
-    color: red;
-    background-color: Yellow;
+    color: SlateBlue;
+    background-color: AntiqueWhite;
+  }
+  #controlInfo{
+    font-size: 12px;
   }
 </style>
 </head>
 <body>
   <div id="topControl">
     <form id="timestamp" name="timestamp" class="formControl">
-      <div><input type="radio" name="xlayers" id="06_10" value="06_10" checked=checked /> <label for="06_10">06.10 @10</label></div>
-      <div><input type="radio" name="xlayers" id="06_13" value="06_13" /> <label for="06_13">06.10 @13</label></div>
-      <div><input type="radio" name="xlayers" id="06_16" value="06_16" /> <label for="06_16">06.10 @16</label></div>
-      <div><input type="radio" name="xlayers" id="06_19" value="06_19" /> <label for="06_19">06.10 @19</label></div>
-      <div><input type="radio" name="xlayers" id="06_21" value="06_21" /> <label for="06_21">06.10 @21</label></div>
+      <div><input type="radio" name="xlayers" id="06_10" value="06_10" checked=checked /> <label for="06_10">S @10</label></div>
+      <div><input type="radio" name="xlayers" id="06_13" value="06_13" /> <label for="06_13">S @13</label></div>
+      <div><input type="radio" name="xlayers" id="06_16" value="06_16" /> <label for="06_16">S @16</label></div>
+      <div><input type="radio" name="xlayers" id="06_19" value="06_19" /> <label for="06_19">S @19</label></div>
+      <div><input type="radio" name="xlayers" id="06_21" value="06_21" /> <label for="06_21">S @21</label></div>
+      <div><input type="radio" name="xlayers" id="07_10" value="07_10" /> <label for="07_10">D @10</label></div>
     </form>
     <form id="varSwitch" name="varSwitch" class="formControl">
       <div><input type="radio" name="xvars" id="LS" value="LS" checked=checked /> <label for="LS">LS</label></div>
       <div><input type="radio" name="xvars" id="LP" value="LP" /> <label for="LP">LP</label></div>
       <div><input type="radio" name="xvars" id="UM" value="UM" /> <label for="UM">UM</label></div>
-      <div><input type="radio" name="xvars" id="LT" value="LT" /> <label for="LT">LT</label></div>
-      <div><input type="radio" name="xvars" id="zeroes" value="zeroes" /> <label for="zeroes">zeroes</label></div>
-
+      <!-- <div><input type="radio" name="xvars" id="LT" value="LT" /> <label for="LT">total</label></div> -->
+      <!-- <div><input type="radio" name="xvars" id="muchextra" value="muchextra" /> <label for="muchextra">muchextra</label></div> -->
+      <div><input type="radio" name="xvars" id="dead" value="dead" /> <label for="dead">dead</label></div>
+      <div><input type="radio" name="xvars" id="ghost" value="ghost" /> <label for="ghost">LT&lt;5</label></div>
+      <!-- <div><input type="radio" name="xvars" id="extremes" value="extremes" /> <label for="extremes">records</label></div> -->
+     <!--  <hr>
+     <small> muchextra: LT-(LP+LS+UM)
+           <br>TODO case filter out LP=0</small> -->
     </form>
 
-    <div id="controlInfo" ts="06_10">x</div>
+    <div id="controlInfo" ts="06_10" xvar="LS">
+      <span class="ts">06_10</span>
+      &rarr;
+      <span class="xvar">LS</span>
+    </div>
     </div>
 
 <div id="map"></div>
@@ -60,71 +79,12 @@
 
   <script src="app/assets/vendor/leaflet/leaflet.ajax.min.js"></script>
   <script src="app/assets/vendor/leaflet/leaflet-providers.js"></script>
+  <script src="app/assets/vendor/leaflet/leaflet.spin.js"></script>
+  <script src="app/assets/vendor/spin.min.js"></script>
   <script src="app/assets/vendor/leaflet/leaflet.label.js"></script>
-
-<script>
-  var geojsonLayer = new L.GeoJSON.AJAX("data/generated/localitati.json",
-  {
-    style: layerStyle,
-    pointToLayer: function (feature, latlng) { return L.circleMarker(latlng)}
-  });
-
-var map = L.map('map', {
-      center: [46, 25],
-      zoom: 7,
-      zoomControl: false, // so we move zoom to the top right corner, see below
-      minZoom: 7,
-      maxZoom: 10,
-      // fullscreenControl: true,
-      maxBounds: [[43, 18], [48.7, 30.9]],
-      // zoomControl:false ,
-      // scrollWheelZoom: false,
-      // layers: [romaniaShape, geojsonLayer]
-      layers: [geojsonLayer]
-    });
-new L.Control.Zoom({ position: 'topright' }).addTo(map);
-// L.tileLayer.provider('Esri.WorldTopoMap').addTo(map);
-L.tileLayer.provider('CartoDB.Positron').addTo(map);
-
-function layerStyle(feature) {
-  selectedLayer=document.getElementById('controlInfo').getAttribute("ts");
-  var xStyle = {weight: 2,fillOpacity: 0.9,stroke: true};
-  xStyle.color = "White";
-  xStyle.fillColor = "MediumSlateBlue"
-  xStyle.radius=Math.round(feature.props.ts[selectedLayer].LS/10,0);
-return xStyle;
-}
+  <script src="app/totallynotgay.js"></script>
 
 
-// Add custom popups to each using our custom feature properties
-geojsonLayer.on("layeradd", function(e) {
-  var marker = e.layer,
-    feature = marker.feature;
-
-  // Create custom popup content
-    var out = "<h4>" +  feature.props.nume_sectie  + "</h4>";
-    out +=   "<b>" +  feature.props.localitate + "</b><br>Înscriși pe lista: <b>" + feature.props.pe_lista + "</b>";
-    // out += JSON.stringify(feature.props.ts, null, 2)
-    var popupContent = out;
-
-  marker.bindPopup(popupContent,{
-    closeButton: true,
-    minWidth: 200
-  });
-});
-
-  //  read select
-  var rad = document.timestamp.xlayers;
-  for(var i = 0; i < rad.length; i++) {
-      rad[i].onclick = function() {
-        let selectedLayer=this.value;
-        geojsonLayer.setStyle(layerStyle);
-        document.getElementById('controlInfo').innerHTML=this.value;
-        document.getElementById('controlInfo').setAttribute("ts", this.value);
-      };
-  }
-
-</script>
 
 
  </body>
