@@ -23,13 +23,13 @@ foreach ($csv as $timestamp => $oneCsv) {
   foreach ($oneCsv as $rowno => $row) {
     // pr($row);
     $masterData[$row['Siruta']][$row['Nr sectie de votare']]['nume sectie']=$row['Nume sectie de votare'];
-    $masterData[$row['Siruta']][$row['Nr sectie de votare']]['localitate']=$row['Localitate'];
-    $masterData[$row['Siruta']][$row['Nr sectie de votare']]['county']=$row['﻿Judet'];
-    $masterData[$row['Siruta']][$row['Nr sectie de votare']]['pe lista']=$row['Votanti lista'];
-    $masterData[$row['Siruta']][$row['Nr sectie de votare']]['ts'][$timestamp]['LP']=$row['LP'];
-    $masterData[$row['Siruta']][$row['Nr sectie de votare']]['ts'][$timestamp]['LS']=$row['LS'];
-    $masterData[$row['Siruta']][$row['Nr sectie de votare']]['ts'][$timestamp]['UM']=$row['UM'];
-    $masterData[$row['Siruta']][$row['Nr sectie de votare']]['ts'][$timestamp]['LT']=$row['LT'];
+    $masterData[$row['Siruta']]['localitate']=$row['Localitate'];
+    $masterData[$row['Siruta']]['county']=$row['﻿Judet'];
+    $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['pe lista']=$row['Votanti lista'];
+    $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['ts'][$timestamp]['LP']=$row['LP'];
+    $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['ts'][$timestamp]['LS']=$row['LS'];
+    $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['ts'][$timestamp]['UM']=$row['UM'];
+    $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['ts'][$timestamp]['LT']=$row['LT'];
   }
 }
 
