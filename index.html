@@ -1,0 +1,114 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>&#9673;</title>
+
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<style>
+  #map {  width: 100%;  height: 660px;}
+</style>
+</head>
+<body>
+  <div id="topControl">
+  <ul class="list-unstyled">
+  
+    <li><input type="radio" name="select_layer" id="select_conform" value="conform"><label for="select_conform"><span class="glyphicon glyphicon-ok-circle"></span> Conforme cu legea</label></li>
+    <li><input type="radio" name="select_layer" id="select_total" value="total"><label for="select_total"><span class="glyphicon glyphicon-plus-sign"></span> Scor total</label></li>
+  </ul>
+</div>
+<span onclick="zx('lala')">ss</span>
+<div id="map"></div>
+
+<link rel="stylesheet" href="app/assets/vendor/leaflet/leaflet.css" />
+  <script src="app/assets/vendor/leaflet/leaflet.js"></script>
+
+  <script src="app/assets/vendor/leaflet/leaflet.ajax.min.js"></script>
+  <script src="app/assets/vendor/leaflet/leaflet-providers.js"></script>
+  <script src="app/assets/vendor/leaflet/leaflet.label.js"></script>
+ 
+<script>
+  var geojsonLayer = new L.GeoJSON.AJAX("data/generated/localitati.json",
+  {
+    style: layerStyle,
+    pointToLayer: function (feature, latlng) { return L.circleMarker(latlng)}
+  });
+
+var map = L.map('map', {
+      center: [46, 25],
+      zoom: 7,
+      zoomControl: false, // so we move zoom to the top right corner, see below
+      minZoom: 7,
+      maxZoom: 10,
+      // fullscreenControl: true,
+      maxBounds: [[43, 18], [48.7, 30.9]],
+      // zoomControl:false ,
+      // scrollWheelZoom: false,
+      // layers: [romaniaShape, geojsonLayer]
+      layers: [geojsonLayer]
+    });
+new L.Control.Zoom({ position: 'topright' }).addTo(map);
+// L.tileLayer.provider('Esri.WorldTopoMap').addTo(map);
+L.tileLayer.provider('CartoDB.Positron').addTo(map);
+
+function layerStyle(feature) {
+  var selectedLayer = 'total';
+  // selectedLayer = $("input:radio[name='select_layer']:checked").val();
+  var xStyle = {weight: 2,fillOpacity: 0.9,stroke: true};
+  xStyle.radius = 1;
+  xStyle.color = "White";
+xStyle.fillColor = "MediumSlateBlue"
+    // if (selectedLayer == 'vizibil') {
+    //   xStyle.radius = feature.properties.viz * 1  + 2 ;
+    //   if (feature.properties.viz != 0)
+    //     xStyle.fillColor = "MediumSlateBlue";
+    //       else { xStyle.fillColor = "White"; xStyle.color = "Black";  xStyle.radius = 3;} 
+    // }
+    //   else if (selectedLayer == 'conform')  {
+    //     xStyle.radius = feature.properties.cf * 1 + 1;
+    //     if (feature.properties.cf != 0)
+    //       xStyle.fillColor = "Green";
+    //         else {xStyle.fillColor = "White"; xStyle.color = "Black";   xStyle.radius = 3;}
+    //   }
+    //     else  if (selectedLayer == 'total') {
+    //       xStyle.radius = (feature.properties.viz * 1  + feature.properties.cf * 1);
+    //       xStyle.fillColor = "Orange";
+    //       if (xStyle.radius == 0) {
+    //         xStyle.fillColor = "White"; xStyle.color = "Black";   xStyle.radius = 3;
+    //       }
+    //     }
+// console.log('lala');
+return xStyle;
+}
+
+
+// Add custom popups to each using our custom feature properties
+geojsonLayer.on("layeradd", function(e) {
+  var marker = e.layer,
+    feature = marker.feature;
+
+  // Create custom popup content
+    var out = "<h4>" +  feature.properties.nume  + "</h4>";
+    out = out + "Rapoarte publicate: <b>" +  feature.properties.viz + "</b><br>Conforme cu legea: <b>" + feature.properties.cf + "</b>";
+    var popupContent = out;
+
+  // http://leafletjs.com/reference.html#popup
+  marker.bindPopup(popupContent,{
+    closeButton: true,
+    minWidth: 200
+  });
+});
+
+// $("#topControl input:radio[name='select_layer']" ).change(function() {
+//   // console.log ($("#topControl input:radio[name='select_layer']:checked").val());
+//   geojsonLayer.setStyle(layerStyle)
+// });
+function zx(what){
+  // alert(what)
+  geojsonLayer.setStyle(what);
+}
+</script>
+ 
+
+ </body>
+</html>
+ 
