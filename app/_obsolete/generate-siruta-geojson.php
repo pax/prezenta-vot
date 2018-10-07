@@ -4,7 +4,7 @@ $rustart = getrusage();
 require('functions.php');
 $participare_json='../data/generated/participare.json';
 $gis_csv='../data/ro_localitati_punct-min.csv';
-$target_json='../data/generated/totallynotgay.json';
+$target_json='../data/generated/localitati.json';
 
 // load json into obj
 
@@ -35,16 +35,20 @@ foreach ($participare_obj as $siruta => $one_loc) {
   $onePoint->geometry->coordinates = isset($gis_arr[$siruta]) ? $gis_arr[$siruta]['coordinates'] : 'no coords:'.$siruta;
   array_push($geojson->features, $onePoint);
   $onePoint->properties=new stdClass();
-  $onePoint->properties->nume_sectie=$participare_obj->$siruta->{'Nr sectie de votare'}->{'nume sectie'};
-  $onePoint->properties->nr_sectie=$participare_obj->$siruta->{'Nr sectie de votare'}->{'nr sectie'};
-  $onePoint->properties->localitate=$participare_obj->$siruta->{'Nr sectie de votare'}->{'localitate'};
-  $onePoint->properties->jud=$participare_obj->$siruta->{'Nr sectie de votare'}->{'county'};
-  $onePoint->properties->pe_lista=$participare_obj->$siruta->{'Nr sectie de votare'}->{'pe lista'};
-  $onePoint->properties->ts = new stdClass();
+  $onePoint->properties->$siruta=new stdClass();
+  $nr_sectie=$participare_obj->$siruta->{'Nr sectie de votare'}->{'nr sectie'};
+  
+  $onePoint->properties->$siruta->$nr_sectie=new stdClass();
+  $onePoint->properties->$siruta->$nr_sectie->nume_sectie=$participare_obj->$siruta->{'Nr sectie de votare'}->{'nume sectie'};
+
+  $onePoint->properties->$siruta->$nr_sectie->localitate=$participare_obj->$siruta->{'Nr sectie de votare'}->{'localitate'};
+  $onePoint->properties->$siruta->$nr_sectie->jud=$participare_obj->$siruta->{'Nr sectie de votare'}->{'county'};
+  $onePoint->properties->$siruta->$nr_sectie->pe_lista=$participare_obj->$siruta->{'Nr sectie de votare'}->{'pe lista'};
+  $onePoint->properties->$siruta->$nr_sectie->ts = new stdClass();
   foreach ($participare_obj->$siruta->{'Nr sectie de votare'}->ts as $ts => $participare) {
     foreach ($participare as $key => $value) {
-      $onePoint->properties->ts->$ts =  new stdClass();
-      $onePoint->properties->ts->$ts->$key=$value;
+      $onePoint->properties->$siruta->$nr_sectie->ts->$ts =  new stdClass();
+      $onePoint->properties->$siruta->$nr_sectie->ts->$ts->$key=$value;
     }
   }
 }
