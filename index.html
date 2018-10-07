@@ -5,22 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <style>
-  body {font-family: sans-serif;}
-  #map {width: 100%;  height: 660px;}
+  body {font-family: sans-serif; margin: 0; padding: 0;}
+  #map {width: 100%;   height: 660px;}
+  #topControl{
+    position: absolute;
+    top: 1em;
+    left: 1em;
+    padding: 1ex;
+    font-size: 14px;
+    max-width: 7em;
+    border:1ex solid White; 
+
+    z-index:2;
+    background-color: LightYellow;
+  }
+  #topControl #layerSwitch label:hover{
+    background-color: Yellow;
+  }
+  #topControl #layerSwitch input + label{
+    cursor: pointer;
+  }
+  #topControl #layerSwitch input:checked + label{
+    color: red;
+  }
 </style>
 </head>
 <body>
   <div id="topControl">
-    <form name="layerSwitch">
-      <label><input type="radio" name="xlayers" value="06_10" checked=checked /> 06.10 @10</label>
-      <label><input type="radio" name="xlayers" value="06_13" /> 06.10 @13</label>
-      <label><input type="radio" name="xlayers" value="06_16" /> 06.10 @16</label>
-      <label><input type="radio" name="xlayers" value="06_19" /> 06.10 @19</label>
-      <label><input type="radio" name="xlayers" value="06_21" /> 06.10 @21</label>
+    <form id="layerSwitch" name="layerSwitch">
+      <div><input type="radio" name="xlayers" id="06_10" value="06_10" checked=checked /> <label for="06_10">06.10 @10</label></div>
+      <div><input type="radio" name="xlayers" id="06_13" value="06_13" /> <label for="06_13">06.10 @13</label></div>
+      <div><input type="radio" name="xlayers" id="06_16" value="06_16" /> <label for="06_16">06.10 @16</label></div>
+      <div><input type="radio" name="xlayers" id="06_19" value="06_19" /> <label for="06_19">06.10 @19</label></div>
+      <div><input type="radio" name="xlayers" id="06_21" value="06_21" /> <label for="06_21">06.10 @21</label></div>
     </form>
     LP LS UM LT-(LP+LS+UM)
 
-    <div id="controlInfo">x</div>
+    <div id="controlInfo" ts="06_10">x</div>
     </div>
 
 <div id="map"></div>
@@ -70,8 +91,8 @@ function layerStyle(feature) {
 
   // var selectedLayer = 'total';
   // selectedLayer = $("input:radio[name='select_layer']:checked").val();
-  var selectedLayer='06_10';
-  // selectedLayer=document.getElementById('controlInfo').getAttribute("ts");
+  selectedLayer=document.getElementById('controlInfo').getAttribute("ts");
+  // selectedLayer=typeof document.getElementById('controlInfo').getAttribute("ts") !== 'undefined' ? document.getElementById('controlInfo').getAttribute("ts") : "06_10";
   var xStyle = {weight: 2,fillOpacity: 0.9,stroke: true};
   xStyle.color = "White";
   xStyle.fillColor = "MediumSlateBlue"
@@ -81,7 +102,7 @@ function layerStyle(feature) {
   // console.log(selectedLayer);
   // console.log(feature.props.ts[selectedLayer].LS);
 
-  xStyle.radius=Math.round(feature.props.ts[selectedLayer].LS/4,0);
+  xStyle.radius=Math.round(feature.props.ts[selectedLayer].LS/10,0);
 // console.log(feature.props.nume_sectie + ' - ' + (Math.round(feature.props.pe_lista / 100) + 1));
 // console.log(round(feature.props.pe_lista));
 
