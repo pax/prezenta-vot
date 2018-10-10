@@ -189,24 +189,79 @@ body {
 .leaflet-popup-pane .leaflet-popup-content {
   margin: 10px;
 }
+.mapTitle {
+ margin: -1em !important;
+  background-color: rgb(33,150,243);
+  padding: 2.5em 1.75em 2em 3em;
+  max-width: 20em;
+  border: 1px solid #FFF;
+  box-shadow: 0 0 1em rgba(0,0,0,.33); 
+  line-height: 1.2;
+  color: White;
+  text-shadow: 1px 1px 1px rgba(0,0,0,.33);
+}
+.mapTitle h1 {
+  font-size: 20px;
+  margin: 0;
+  margin-bottom: .5ex;
+  font-weight: normal;
+}
+.mapTitle span {
+  font-size: 14px;
+  /*opacity: .8;*/
+}
+.mapTitle a {
+  color: LightYellow !important;
+}
 @media screen and (max-width: 800px) {
   #topControl {
      max-width: 100%;
-      top: auto;
-      bottom: 0;
+      background-color: rgb(33,150,243);
+      color: White;
+      text-shadow: 1px 1px 1px rgba(0,0,0,.2); 
+      top: 0;
+      right: 0;
       margin: 0;
+      padding-bottom: 0;
   /*left: 0;*/
+  }
+  #topControl .formControl label {
+     color: WhiteSmoke;
+  }
+  #topControl .formControl label:before  {
+    background-color: rgb(33,150,243);
+    color: WhiteSmoke;
+    border: none;
+  }
+  #topControl .formControl input:checked+label,
+  #topControl .formControl input:checked+label:before {
+    color: Yellow;
+    border: none;
+  }
+  #topControl:before{
+    content: 'Prezența la vot la referendumul pentru modificarea Constituției – octombrie 2018';
+    border-bottom: 1px solid #CCC;
+    padding-bottom: 1ex;
+    margin-top: 1ex;
+    font-size: 17px;
+    display: block;
+    line-height: 1.4;
   }
   #topControl .controlItem {
     display: inline-block;
+    /*margin: .25ex 0;*/
+    line-height: 1.5;
   }
   #topControl .formControl {
     padding: .5ex !important;
   }
-  #scaleWrapper, 
+  #scaleWrapper,
   .leaflet-control-attribution,
+  .controlItem.legenda,
+  .mapTitle,
+  #timestamp,
   .formControl .title  {
-    display: none;
+    display: none !important;
   }
 }
 

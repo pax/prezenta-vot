@@ -48,7 +48,7 @@
     layers: [judeteShape, geojsonLayer]
   });
   map.attributionControl.addAttribution("<b>Sursă date</b>: <a target='_blank' href='https://prezenta.bec.ro'>Biroul Electoral Central</a>");
-  new L.Control.Zoom({ position: 'topleft' }).addTo(map);
+  new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
   // L.tileLayer.provider('Esri.WorldTopoMap').addTo(map);
   // L.tileLayer.provider('Esri.WorldTerrain').addTo(map);
   L.tileLayer.provider('CartoDB.Positron').addTo(map);
@@ -61,7 +61,14 @@
   selectedVar = document.getElementById('controlInfo').getAttribute("xvar");
   scaleLevel = document.getElementById('scale').value;
 
-
+var info = L.control({ position: 'topleft' });
+  info.onAdd = function(map) {
+    this._div = L.DomUtil.create('div', 'mapTitle');
+    this._div.innerHTML="<h1>Prezența la vot la referendumul pentru modificarea Constituției.</h1> <span> &larr; <a href='https://votcorect.ro'>votcorect.ro</a> / sursă date : <a target='_blank' href='https://prezenta.bec.ro'>BEC</a> </span>";
+    // this.update();
+    return this._div;
+  };
+info.addTo(map);
 
   /* info box
   - - - - - - - - - - - - - - - - - - - - -  */
