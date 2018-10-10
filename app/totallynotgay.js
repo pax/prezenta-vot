@@ -52,6 +52,8 @@
   L.tileLayer.provider('CartoDB.Positron').addTo(map);
   // L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(map);
 
+map.attributionControl.addAttribution("<b>sursă date</b>: <a target='_blank' href='http://prezenta.bec.ro'>Biroul Electoral Central</a>");
+
   selectedLayer = document.getElementById('controlInfo').getAttribute("ts");
   selectedVar = document.getElementById('controlInfo').getAttribute("xvar");
   scaleLevel = document.getElementById('scale').value;
