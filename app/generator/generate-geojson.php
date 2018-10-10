@@ -2,9 +2,9 @@
 <?php
 $rustart = getrusage();
 require('functions.php');
-$participare_json='../data/generated/participare.json';
-$gis_csv='../data/gis/ro_localitati_punct-min.csv';
-$target_json='../data/generated/localitati.json';
+$participare_json='../../data/generated/participare.json';
+$gis_csv='../../data/gis/ro_localitati_punct-min.csv';
+$target_json='../../data/generated/localitati.json';
 
 // load json into obj
 

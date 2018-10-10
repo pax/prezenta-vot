@@ -2,9 +2,9 @@
 <?php
 $rustart = getrusage();
 require('functions.php');
-$source_csv_dir='../data/sources/';
-$target_csv='../data/generated/participare.csv';
-$target_json='../data/generated/participare.json';
+$source_csv_dir='../../data/sources/';
+$target_csv='../../data/generated/participare.csv';
+$target_json='../../data/generated/participare.json';
 
 $ze_csvs = glob($source_csv_dir."*.csv");
 
