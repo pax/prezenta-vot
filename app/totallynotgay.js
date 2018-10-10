@@ -47,12 +47,11 @@
     // layers: [romaniaShape, geojsonLayer]
     layers: [judeteShape, geojsonLayer]
   });
+  map.attributionControl.addAttribution("<b>Sursă date</b>: <a target='_blank' href='https://prezenta.bec.ro'>Biroul Electoral Central</a>");
   new L.Control.Zoom({ position: 'topleft' }).addTo(map);
   // L.tileLayer.provider('Esri.WorldTopoMap').addTo(map);
-  L.tileLayer.provider('CartoDB.Positron').addTo(map);
+  // L.tileLayer.provider('CartoDB.Positron').addTo(map);
   // L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(map);
-
-map.attributionControl.addAttribution("<b>sursă date</b>: <a target='_blank' href='http://prezenta.bec.ro'>Biroul Electoral Central</a>");
 
   selectedLayer = document.getElementById('controlInfo').getAttribute("ts");
   selectedVar = document.getElementById('controlInfo').getAttribute("xvar");
@@ -112,7 +111,7 @@ map.attributionControl.addAttribution("<b>sursă date</b>: <a target='_blank' hr
         max = 50;
         break;
       case 'LP':
-        value = feature.props.ts[selectedLayer][selectedVar];
+        value = feature.props.ts[selectedLayer][selectedVar]/3;
         max = 1527;
         break;
       case 'LS':
@@ -152,19 +151,17 @@ map.attributionControl.addAttribution("<b>sursă date</b>: <a target='_blank' hr
     var marker = e.layer,
       feature = marker.feature;
 
-    /*    // Create custom popup content
-        var out = "<strong>" + feature.props.nume_sectie + "</strong> (" + feature.props.jud + feature.props.nr_sectie + ")<br>";
-        out += "" + feature.props.localitate + "<br>Înscriși pe lista: <b>" + feature.props.pe_lista + "</b>";
+        // Create custom popup content
+        var out = "<strong>" + feature.props.nume_sectie + "</strong> (" + feature.props.jud + feature.props.nr_sectie + ") – ";
+        out += "" + feature.props.localitate + "<small> – Înscriși pe lista: <b>" + feature.props.pe_lista + "</b></small>";
         // out += JSON.stringify(feature.props.ts, null, 2)
-        out += locationProfie(feature.props.ts);
+        out += locationProfie(feature.props.ts,feature.props.pe_lista);
         var popupContent = out;
 
         marker.bindPopup(popupContent, {
           closeButton: true,
           minWidth: 200
         });
-    */
-
   });
 
 
