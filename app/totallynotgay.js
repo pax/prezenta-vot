@@ -21,9 +21,9 @@
   //   var romaniaShape = new L.GeoJSON.AJAX("data/gis/romania-borders.json", { style: stilGranita} );
 
   var stilJudete = {
-    "color": "LightSteelBlue",
+    "color": "SteelBlue",
     "weight": 2,
-    "opacity": .6,
+    "opacity": .4,
     "fillColor": "rgba(213, 239, 255, .85)",
     "fillOpacity": .5
     // "dashArray": "2, 6"
