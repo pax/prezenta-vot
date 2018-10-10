@@ -8,6 +8,9 @@ $target_json='../data/generated/participare.json';
 
 $ze_csvs = glob($source_csv_dir."*.csv");
 
+// pr($ze_csvs);
+// exit;
+
 foreach ($ze_csvs as $oneCsv) {
 
   $trimestamps=explode('-', $oneCsv);
@@ -23,7 +26,7 @@ foreach ($csv as $timestamp => $oneCsv) {
   foreach ($oneCsv as $rowno => $row) {
     // pr($row);
     // break;
-    $masterData[$row['Siruta']][$row['Nr sectie de votare']]['nume sectie']=$row['Nume sectie de votare'];
+
     $masterData[$row['Siruta']]['localitate']=$row['Localitate'];
     $masterData[$row['Siruta']]['county']=$row['﻿Judet'];
     $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['pe lista']=$row['Votanti lista'];
@@ -49,3 +52,4 @@ saveFile(json_encode( $masterData ), $target_json);
 
 $ru = getrusage();
 echo '<p><small><b>'.rutime($ru, $rustart, "utime") . "</b> ms computations;\n<b>". rutime($ru, $rustart, "stime") . "</b> ms sys calls</small></p>\n";
+echo '<a href="index.html">back</a>';

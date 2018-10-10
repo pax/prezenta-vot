@@ -1,0 +1,7 @@
+.github
+.editorconfig
+
+*_obsolete*
+_obsolete
+_test
+data/sources/

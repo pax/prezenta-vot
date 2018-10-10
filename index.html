@@ -1,5 +1,5 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>&#9673;</title>
+<title>&#9673; Prezență vot</title>
 
 <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,10 +18,12 @@
     padding: 1ex;
     font-size: 14px;
     max-width: 7em;
-    border:1ex solid White;
-
+    border:.66ex solid White;
+    border-radius: 2px;
     z-index:2;
     background-color: LightYellow;
+    box-shadow: .1ex .1ex .5ex rgba(0,0,0,.2); 
+    /*overflow: hidden;*/
   }
   #topControl .formControl label:hover{
     background-color: rgba(0,0,0,.05); 
@@ -60,8 +62,17 @@
   }  
 
   #controlInfo{
-    display: none;
+    /*display: none;*/
     font-size: 12px;
+  }
+  table.locBadge {
+    font-size: 11px;
+  }
+  table.locBadge td {
+    text-align: center;
+  }
+  #scale {
+    max-width: 8em;
   }
 </style>
 </head>
@@ -69,32 +80,38 @@
   <div id="topControl">
     <form id="timestamp" name="timestamp" class="formControl">
       <span class="title">Timestamps</span>
-      <div><input type="radio" name="xlayers" id="06_10" value="06_10" checked=checked /> <label for="06_10">S @10</label></div>
+<!--       <div><input type="radio" name="xlayers" id="06_10" value="06_10" /> <label for="06_10">S @10</label></div>
       <div><input type="radio" name="xlayers" id="06_13" value="06_13" /> <label for="06_13">S @13</label></div>
       <div><input type="radio" name="xlayers" id="06_16" value="06_16" /> <label for="06_16">S @16</label></div>
-      <div><input type="radio" name="xlayers" id="06_19" value="06_19" /> <label for="06_19">S @19</label></div>
-      <div><input type="radio" name="xlayers" id="06_21" value="06_21" /> <label for="06_21">S @21</label></div>
-      <div><input type="radio" name="xlayers" id="07_10" value="07_10" /> <label for="07_10">D @10</label></div>
+      <div><input type="radio" name="xlayers" id="06_19" value="06_19" /> <label for="06_19">S @19</label></div> -->
+      <div><input type="radio" name="xlayers" id="06_21" value="06_21"  /> <label for="06_21">S @21</label></div>
+<!--       <div><input type="radio" name="xlayers" id="07_10" value="07_10" /> <label for="07_10">D @10</label></div>
+      <div><input type="radio" name="xlayers" id="07_13" value="07_13" /> <label for="07_13">D @13</label></div> -->
+      <!-- <div><input type="radio" name="xlayers" id="07_19" value="07_19" checked=checked  /> <label for="07_19">D @196</label></div> -->
+      <div><input type="radio" name="xlayers" id="07_21" value="07_21" checked=checked  /> <label for="07_21">D @21</label></div>
     </form>
+
     <form id="varSwitch" name="varSwitch" class="formControl">
       <span class="title">Vars</span>
       <div><input type="radio" name="xvars" id="LS" value="LS" checked=checked /> <label for="LS">LS</label></div>
       <div><input type="radio" name="xvars" id="LP" value="LP" /> <label for="LP">LP</label></div>
       <div><input type="radio" name="xvars" id="UM" value="UM" /> <label for="UM">UM</label></div>
       <div><input type="radio" name="xvars" id="LT" value="LT" /> <label for="LT">LT</label></div>
-      <!-- <div><input type="radio" name="xvars" id="muchextra" value="muchextra" /> <label for="muchextra">muchextra</label></div> -->
-      <div><input type="radio" name="xvars" id="dead" value="dead" /> <label for="dead">dead</label></div>
-      <div><input type="radio" name="xvars" id="ghost" value="ghost" /> <label for="ghost">ghosts</label></div>
-      <!-- <div><input type="radio" name="xvars" id="extremes" value="extremes" /> <label for="extremes">records</label></div> -->
+            <!-- <div><input type="radio" name="xvars" id="muchextra" value="muchextra" /> <label for="muchextra">muchextra</label></div> -->
+      <!-- <div><input type="radio" name="xvars" id="dead" value="dead" /> <label for="dead">dead</label></div> -->
+      <!-- <div><input type="radio" name="xvars" id="ghost" value="ghost" /> <label for="ghost">ghosts</label></div> -->
+            <!-- <div><input type="radio" name="xvars" id="extremes" value="extremes" /> <label for="extremes">records</label></div> -->
      <!--  <hr>
      <small> muchextra: LT-(LP+LS+UM)
            <br>TODO case filter out LP=0</small> -->
+    <input type="range" min="1" max="50" value="25" class="slider" id="scale" onchange="scaleBubbles(this.value)"">
     </form>
 
-    <div id="controlInfo" ts="06_10" xvar="LS">
-      <span class="ts">06_10</span>
+    <div id="controlInfo" ts="07_21" xvar="LS" range="50">
+      <span class="ts">07_21</span>
       &rarr;
       <span class="xvar">LS</span>
+      (<span class="range">50</span>)
     </div>
     </div>
 

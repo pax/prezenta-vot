@@ -38,30 +38,38 @@ foreach ($participare_obj as $siruta => $one_loc) {
   // $onePoint->geometry->coordinates = isset($gis_arr[$siruta]) ? $gis_arr[$siruta]['coordinates'] : 'no coords:'.$siruta;
   $onePoint->geometry->coordinates = isset($gis_arr[$siruta]) ? $gis_arr[$siruta]['coordinates'] : null;
   $onePoint->props=new \stdClass();
-  
+  // $onePoint->props->$siruta =new \stdClass();
+  $onePoint->props->loc=$participare_obj->$siruta->localitate;
+  $onePoint->props->jud=$participare_obj->$siruta->county;
+  $onePoint->props->sectii =new \stdClass();
   foreach ($participare_obj->$siruta->sectii as $nr_sectie => $oSectie) {
 
   // $onePoint->props->localitate=$participare_obj->$siruta->{'Nr sectie de votare'}->{'localitate'};
   // $onePoint->props->jud=$participare_obj->$siruta->{'Nr sectie de votare'}->{'county'};
-
-    $onePoint->props->$siruta =new \stdClass();
-    $onePoint->props->$siruta->sectii =new \stdClass();
-    $onePoint->props->$siruta->sectii->$nr_sectie =new \stdClass();
-    $onePoint->props->$siruta->sectii->$nr_sectie->nume_sectie=$oSectie->{'nume sectie'};
-    $onePoint->props->$siruta->sectii->$nr_sectie->pe_lista=$oSectie->{'pe lista'};
-    $onePoint->props->$siruta->sectii->$nr_sectie->ts = new \stdClass();
-    // pr($oSectie);
-    // break;
-
+// pr($oSectie);
+// break;
+    
+    $onePoint->props->sectii->$nr_sectie =new \stdClass();
+    $onePoint->props->sectii->$nr_sectie->nume_sectie=$oSectie->{'nume sectie'};
+    $onePoint->props->sectii->$nr_sectie->pe_lista=$oSectie->{'pe lista'};
+    $onePoint->props->sectii->$nr_sectie->ts = new \stdClass();
+// pr($oSectie->ts);
+// break;
     foreach ($oSectie->ts as $xts => $participare) {
-      $onePoint->props->$siruta->sectii->$nr_sectie->ts->$xts = new stdClass();
+// pr($xts);
+      // pr($participare);
+      $onePoint->props->sectii->$nr_sectie->ts->$xts = new stdClass();
       foreach ($participare as $xkey => $value) {
-        $onePoint->props->$siruta->sectii->$nr_sectie->ts->$xts->$xkey=$value;
+        $onePoint->props->sectii->$nr_sectie->ts->$xts->$xkey=$value;
       }
     }
+
+    // pr($onePoint);
+    // break;
+
   }
-  
- 
+
+
   array_push($geojson->features, $onePoint);
   // unset($onePoint);
   }
@@ -72,3 +80,4 @@ foreach ($participare_obj as $siruta => $one_loc) {
 saveFile(json_encode( $geojson, JSON_NUMERIC_CHECK  ), $target_json);
 $ru = getrusage();
 echo '<p><small><b>'.rutime($ru, $rustart, "utime") . "</b> ms computations;\n<b>". rutime($ru, $rustart, "stime") . "</b> ms sys calls</small></p>\n";
+echo '<a href="index.html">back</a>';
