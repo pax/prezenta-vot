@@ -30,8 +30,8 @@ body {
 
 #topControl {
   position: absolute;
-  bottom: 1ex;
-  left: 1ex;
+  top: 1ex;
+  right: 1ex;
   z-index: 2;
   max-width: 9em;
 }
@@ -123,6 +123,11 @@ body {
   font-size: 12px;
 }
 
+.locBadge table tr:last-child td {
+  font-weight: bold;
+  background-color: LightYellow;
+}
+
 .locBadge th {
   text-align: right;
   font-weight: normal;
@@ -147,8 +152,9 @@ body {
   line-height: 1.15;
   /* background-color: WhiteSmoke;*/
 }
-
+.leaflet-popup-pane .leaflet-popup header,
 .infoBox header {
+  font-size: 13px;
   border-bottom: 1px solid #DDD;
   padding-bottom: 1ex;
   margin-bottom: 1ex;
@@ -174,11 +180,22 @@ body {
 
 }
 
+.leaflet-popup-pane .leaflet-popup  {
+  max-width: 250px;
+}
+.leaflet-popup-pane  .leaflet-popup-content-wrapper {
+  border-radius: 3px;
+}
+.leaflet-popup-pane .leaflet-popup-content {
+  margin: 10px;
+}
 @media screen and (max-width: 800px) {
   #topControl {
      max-width: 100%;
+      top: auto;
       bottom: 0;
-  left: 0;
+      margin: 0;
+  /*left: 0;*/
   }
   #topControl .controlItem {
     display: inline-block;
@@ -187,7 +204,9 @@ body {
     padding: .5ex !important;
   }
   #scaleWrapper, 
+  .leaflet-control-attribution,
   .formControl .title  {
     display: none;
   }
 }
+

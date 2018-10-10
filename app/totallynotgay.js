@@ -50,8 +50,12 @@
   map.attributionControl.addAttribution("<b>Sursă date</b>: <a target='_blank' href='https://prezenta.bec.ro'>Biroul Electoral Central</a>");
   new L.Control.Zoom({ position: 'topleft' }).addTo(map);
   // L.tileLayer.provider('Esri.WorldTopoMap').addTo(map);
-  // L.tileLayer.provider('CartoDB.Positron').addTo(map);
+  // L.tileLayer.provider('Esri.WorldTerrain').addTo(map);
+  L.tileLayer.provider('CartoDB.Positron').addTo(map);
   // L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(map);
+  // L.tileLayer.provider('Stamen.Watercolor').addTo(map);
+  // L.tileLayer.provider('CartoDB.DarkMatter').addTo(map);
+  // L.tileLayer.provider('Stamen.TonerLite').addTo(map);
 
   selectedLayer = document.getElementById('controlInfo').getAttribute("ts");
   selectedVar = document.getElementById('controlInfo').getAttribute("xvar");
@@ -61,7 +65,7 @@
 
   /* info box
   - - - - - - - - - - - - - - - - - - - - -  */
-
+/*
   var info = L.control({ position: 'topright' });
   info.onAdd = function(map) {
     this._div = L.DomUtil.create('div', 'infoBox mapControl');
@@ -71,7 +75,7 @@
   info.update = function(props) {
     this._div.innerHTML = props ? "<header><strong>" + props.nume_sectie + "</strong> (" + props.jud + props.nr_sectie + ") – " + props.localitate + "<br><small>Înscriși pe lista: <b>" + props.pe_lista + "</b></small></header>" + locationProfie(props.ts, props.pe_lista) : 'click pe o localitate pentru informații suplimentare';
   };
-  info.addTo(map);
+  info.addTo(map);*/
 
   /*end info bpx*/
 
@@ -152,8 +156,8 @@
       feature = marker.feature;
 
         // Create custom popup content
-        var out = "<strong>" + feature.props.nume_sectie + "</strong> (" + feature.props.jud + feature.props.nr_sectie + ") – ";
-        out += "" + feature.props.localitate + "<small> – Înscriși pe lista: <b>" + feature.props.pe_lista + "</b></small>";
+        var out = "<header><strong>" + feature.props.nume_sectie + "</strong>, ";
+                out += "" + feature.props.localitate + " – " + feature.props.jud + feature.props.nr_sectie + "<br/>Înscriși pe lista: <b>" + feature.props.pe_lista + "</b></header>";
         // out += JSON.stringify(feature.props.ts, null, 2)
         out += locationProfie(feature.props.ts,feature.props.pe_lista);
         var popupContent = out;
@@ -189,13 +193,13 @@
       layer.bringToFront();
     }
 
-    info.update(layer.feature.props);
+    // info.update(layer.feature.props);
   }
 
 
   function resetHighlight(e) {
     geojsonLayer.resetStyle(e.target);
-    info.update();
+    // info.update();
   }
 
   //  read select
@@ -248,7 +252,7 @@ if (document.varSwitch.xvars != null){
   function locationProfie(xjson, prezenta) {
     // return JSON.stringify(xjson);
     let xout = '<div class="locBadge">';
-        xout += '<table ><thead><tr> <th>ts</th><th>LP</th><th>LS</th><th>UM</th><th>LT</th><th>prezență</th></tr></thead><tbody>';
+        xout += '<table ><thead><tr> <th>tstamp</th><th>LP</th><th>LS</th><th>UM</th><th>LT</th><th>prezență</th></tr></thead><tbody>';
         for (var xsectie in xjson) {
           if (xjson.hasOwnProperty(xsectie)) {
             xout += '<tr>';
