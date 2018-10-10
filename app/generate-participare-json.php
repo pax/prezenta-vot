@@ -8,9 +8,6 @@ $target_json='../data/generated/participare.json';
 
 $ze_csvs = glob($source_csv_dir."*.csv");
 
-// pr($ze_csvs);
-// exit;
-
 foreach ($ze_csvs as $oneCsv) {
 
   $trimestamps=explode('-', $oneCsv);
@@ -25,17 +22,16 @@ foreach ($csv as $timestamp => $oneCsv) {
   // $masterData[$timestamp]=[];
   foreach ($oneCsv as $rowno => $row) {
     // pr($row);
-    // break;
-
-    $masterData[$row['Siruta']]['localitate']=$row['Localitate'];
-    $masterData[$row['Siruta']]['county']=$row['﻿Judet'];
-    $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['pe lista']=$row['Votanti lista'];
-    $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['nume sectie']=$row['Nume sectie de votare'];
-    // $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['nume']=$row['Votanti lista'];
-    $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['ts'][$timestamp]['LP']=$row['LP'];
-    $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['ts'][$timestamp]['LS']=$row['LS'];
-    $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['ts'][$timestamp]['UM']=$row['UM'];
-    $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['ts'][$timestamp]['LT']=$row['LT'];
+    $masterData[$row['Siruta']]['Nr sectie de votare']['siruta']=$row['Siruta'];
+    $masterData[$row['Siruta']]['Nr sectie de votare']['nr sectie']=$row['Nr sectie de votare'];
+    $masterData[$row['Siruta']]['Nr sectie de votare']['nume sectie']=$row['Nume sectie de votare'];
+    $masterData[$row['Siruta']]['Nr sectie de votare']['localitate']=$row['Localitate'];
+    $masterData[$row['Siruta']]['Nr sectie de votare']['county']=$row['﻿Judet'];
+    $masterData[$row['Siruta']]['Nr sectie de votare']['pe lista']=$row['Votanti lista'];
+    $masterData[$row['Siruta']]['Nr sectie de votare']['ts'][$timestamp]['LP']=$row['LP'];
+    $masterData[$row['Siruta']]['Nr sectie de votare']['ts'][$timestamp]['LS']=$row['LS'];
+    $masterData[$row['Siruta']]['Nr sectie de votare']['ts'][$timestamp]['UM']=$row['UM'];
+    $masterData[$row['Siruta']]['Nr sectie de votare']['ts'][$timestamp]['LT']=$row['LT'];
   }
 }
 

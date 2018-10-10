@@ -1,0 +1,193 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: url('img/bcg-noise-1.png');
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+#map.leaflet-container {
+  /*background-image: url("app/assets/img/loader-bcg.gif");*/
+  /*background-image: url("app/assets/img/vc-bcg-2018.svg");*/
+  background-size: contain;
+}
+
+.mapControl {
+  border: 1px solid rgba(176, 196, 222, .5);
+  /*border-radius: 2px;*/
+  background-color: rgba(255, 240, 245, .85);
+  /*background-color: LightYellow;*/
+  box-shadow: 1px 1px 1ex #BBB;
+  padding: 1ex;
+  font-size: 14px;
+  margin-bottom: 1ex;
+  /*padding: 1ex;*/
+}
+
+#topControl {
+  position: absolute;
+  bottom: 1ex;
+  left: 1ex;
+  z-index: 2;
+  max-width: 9em;
+}
+
+#topControl form.formControl {
+  margin-bottom: 0;
+  padding: 1em;
+}
+
+#topControl .controlItem {
+  color: #777;
+  padding-left: 1ex;
+}
+
+#topControl .formControl label:hover,
+#topControl .formControl label:hover:before {
+  /*background-color: MistyRose;*/
+  border-bottom: 2px solid SlateBlue;
+}
+
+#topControl .formControl input {
+  display: inline-block;
+}
+
+#topControl .formControl input+label {
+  cursor: pointer;
+  padding: 2px 0 2px 4px;
+  position: relative;
+  margin: 0 2ex 0 -0.4em;
+  display: inline-block;
+  border-bottom: 2px solid transparent;
+  /*min-width: 5em;*/
+}
+
+#topControl .formControl input:checked+label {
+  color: DarkSlateBlue;
+  /*background-color: Khaki;*/
+  border-bottom: 2px solid DarkSlateBlue;
+}
+
+#topControl .formControl label:before {
+  content: '\26F6';
+  /*background-color: LightYellow;*/
+  background-color: rgb(255, 240, 245);
+  margin-top: -2px;
+  margin-left: -2em;
+  padding: 2px;
+  padding-right: 1ex;
+  border-bottom: 2px solid transparent;
+}
+
+#topControl .formControl input:checked+label:before {
+  content: '\26DD';
+  color: DarkSlateBlue;
+  /*background-color: Khaki;*/
+  border-bottom: 2px solid DarkSlateBlue;
+}
+
+#controlInfo {
+  font-size: 12px;
+  display: none;
+}
+
+#scale {
+  cursor: pointer;
+  max-width: 8em;
+}
+
+#scaleWrapper {
+  margin-top: 1em;
+}
+
+.formControl .title {
+  text-transform: uppercase;
+  font-size: 11px;
+  /*display: inline-block;*/
+  /*padding-bottom: 3px;*/
+  margin-bottom: .3ex;
+  display: block;
+  /*opacity: .6;*/
+
+}
+
+.locBadge {
+  text-align: center;
+}
+
+.locBadge table {
+  font-size: 12px;
+}
+
+.locBadge th {
+  text-align: right;
+  font-weight: normal;
+  background-color: rgba(0, 0, 0, .1);
+  padding: px 3px;
+}
+
+.locBadge td {
+  border-top: 1px dotted #CCC;
+  padding: 1px 3px;
+  text-align: right;
+}
+
+.locBadge td.x0 {
+  color: #999;
+}
+
+.infoBox {
+  /*border:2px dotted #999; */
+  width: 200px;
+  padding: 1em;
+  line-height: 1.15;
+  /* background-color: WhiteSmoke;*/
+}
+
+.infoBox header {
+  border-bottom: 1px solid #DDD;
+  padding-bottom: 1ex;
+  margin-bottom: 1ex;
+}
+
+.infoBox header strong {
+  /*font-weight: normal;*/
+  /*text-decoration: underline;*/
+
+}
+
+.leaflet-container {
+  background-color: transparent !important;
+}
+}
+
+.legenda small {
+  display: block;
+}
+
+.legenda span {
+  display: inline-block;
+
+}
+
+@media screen and (max-width: 800px) {
+  #topControl {
+     max-width: 100%;
+      bottom: 0;
+  left: 0;
+  }
+  #topControl .controlItem {
+    display: inline-block;
+  }
+  #topControl .formControl {
+    padding: .5ex !important;
+  }
+  #scaleWrapper, 
+  .formControl .title  {
+    display: none;
+  }
+}
