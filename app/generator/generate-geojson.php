@@ -38,19 +38,22 @@ foreach ($participare_obj as $siruta => $one_loc) {
   $onePoint->props = new \stdClass();
   $onePoint->props->jud = $participare_obj->$siruta->county;
   $onePoint->props->localitate = $participare_obj->$siruta->localitate;
-$onePoint->props->sectii = new \stdClass();
-foreach ($participare_obj->$siruta->sectii as $nr_sectie => $oSectie) {
-  $onePoint->props->sectii->$nr_sectie = new \stdClass();
-  $onePoint->props->sectii->$nr_sectie->nume = $oSectie->{'nume sectie'};
-  $onePoint->props->sectii->$nr_sectie->pe_lista = $oSectie->{'pe lista'};
-  $onePoint->props->sectii->$nr_sectie->ts = new \stdClass();
-  foreach ($oSectie->ts as $ts => $tsVals) {
-    $onePoint->props->sectii->$nr_sectie->ts->$ts = new \stdClass();
-    foreach ($tsVals as $valName => $oneVal) {
-      $onePoint->props->sectii->$nr_sectie->ts->$ts->$valName = $oneVal;
+  $onePoint->props->sectii = new \stdClass();
+  $onePoint->props->total = new \stdClass();
+  foreach ($participare_obj->$siruta->sectii as $nr_sectie => $oSectie) {
+    $onePoint->props->sectii->$nr_sectie = new \stdClass();
+    $onePoint->props->sectii->$nr_sectie->nume = $oSectie->{'nume sectie'};
+    $onePoint->props->sectii->$nr_sectie->pe_lista = $oSectie->{'pe lista'};
+    $onePoint->props->sectii->$nr_sectie->ts = new \stdClass();
+    foreach ($oSectie->ts as $ts => $tsVals) {
+      $onePoint->props->sectii->$nr_sectie->ts->$ts = new \stdClass();
+      foreach ($tsVals as $valName => $oneVal) {
+        $onePoint->props->sectii->$nr_sectie->ts->$ts->$valName = $oneVal;
+        if (!isset($onePoint->props->total->$valName)) $onePoint->props->total->$valName = 0;
+        else $onePoint->props->total->$valName += $oneVal;
+      }
     }
   }
-}
 
   array_push($geojson->features, $onePoint);
   // unset($onePoint);
