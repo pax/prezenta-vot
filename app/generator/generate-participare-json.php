@@ -12,9 +12,9 @@ $ze_csvs = glob($source_csv_dir."*.csv");
 
 foreach ($ze_csvs as $oneCsv) {
 
-  $trimestamps=explode('-', $oneCsv);
-  $csv[$trimestamps[2]]=csv_to_array($oneCsv);
-  echo '<br/>-'.$oneCsv.' <em>'.count($csv[$trimestamps[2]]). '</em> rows';
+    $trimestamps=explode('-', $oneCsv);
+    $csv[$trimestamps[2]]=csv_to_array($oneCsv);
+    echo '<br/>-'.$oneCsv.' <em>'.count($csv[$trimestamps[2]]). '</em> rows';
 }
 $masterData = [];
 
@@ -22,20 +22,20 @@ $masterData = [];
 
 foreach ($csv as $timestamp => $oneCsv) {
   // $masterData[$timestamp]=[];
-  foreach ($oneCsv as $rowno => $row) {
-    // pr($row);
-    // break;
+    foreach ($oneCsv as $rowno => $row) {
+      // pr($row);
+      // break;
 
-    $masterData[$row['Siruta']]['localitate']=$row['Localitate'];
-    $masterData[$row['Siruta']]['county']=$row['﻿Judet'];
-    $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['pe lista']=$row['Votanti lista'];
-    $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['nume sectie']=$row['Nume sectie de votare'];
-    // $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['nume']=$row['Votanti lista'];
-    $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['ts'][$timestamp]['LP']=$row['LP'];
-    $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['ts'][$timestamp]['LS']=$row['LS'];
-    $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['ts'][$timestamp]['UM']=$row['UM'];
-    $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['ts'][$timestamp]['LT']=$row['LT'];
-  }
+        $masterData[$row['Siruta']]['localitate']=$row['Localitate'];
+        $masterData[$row['Siruta']]['county']=$row['﻿Judet'];
+        $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['pe lista']=$row['Votanti lista'];
+        $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['nume sectie']=$row['Nume sectie de votare'];
+      // $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['nume']=$row['Votanti lista'];
+        $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['ts'][$timestamp]['LP']=$row['LP'];
+        $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['ts'][$timestamp]['LS']=$row['LS'];
+        $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['ts'][$timestamp]['UM']=$row['UM'];
+        $masterData[$row['Siruta']]['sectii'][$row['Nr sectie de votare']]['ts'][$timestamp]['LT']=$row['LT'];
+    }
 }
 
 echo '<p>masterdata:  '.count($masterData).' rows</p>';
@@ -43,7 +43,7 @@ echo '<p>masterdata:  '.count($masterData).' rows</p>';
 
 // pr($masterData);
 
-saveFile(json_encode( $masterData ), $target_json);
+saveFile(json_encode($masterData, JSON_PRETTY_PRINT), $target_json);
 
 // array_to_csv($masterData, $target_csv);
 

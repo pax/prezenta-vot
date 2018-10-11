@@ -1,0 +1,82 @@
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Prezență vot – Vot Corect</title>
+  <meta charset="utf-8">
+  <meta property="og:image" content="pp/assets/img/screenshot.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" type="image/png" sizes="32x32" href="app/assets/img/stats-icon-64px.png">
+  <link rel="stylesheet" href="app/assets/style.css">
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-23992992-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+
+<body>
+  <div id="topControl" class="mapControl">
+    <div id="menuWrapper"></div>
+    <form id="timestamp" name="timestamp" class="formControl">
+      <span class="title">Timestamps</span>
+      <!-- <div class="controlItem"><input type="radio" name="xlayers" id="06_10" value="06_10" /> <label for="06_10">S @10</label></div> -->
+      <!-- <div class="controlItem"><input type="radio" name="xlayers" id="06_13" value="06_13" /> <label for="06_13">S @13</label></div> -->
+      <!-- <div class="controlItem"><input type="radio" name="xlayers" id="06_16" value="06_16" /> <label for="06_16">S @16</label></div> -->
+      <!-- <div class="controlItem"><input type="radio" name="xlayers" id="06_19" value="06_19" /> <label for="06_19">S @19</label></div> -->
+      <div class="controlItem"><input type="radio" name="xlayers" id="06_21" value="06_21" /> <label for="06_21">S @21</label></div>
+      <!-- <div class="controlItem"><input type="radio" name="xlayers" id="07_10" value="07_10" /> <label for="07_10">D @10</label></div> -->
+      <!-- <div class="controlItem"><input type="radio" name="xlayers" id="07_13" value="07_13" /> <label for="07_13">D @13</label></div> -->
+      <!-- <div class="controlItem"><input type="radio" name="xlayers" id="07_16" value="07_16" /> <label for="07_16">D @16</label></div> -->
+      <!-- <div class="controlItem"><input type="radio" name="xlayers" id="07_19" value="07_19" /> <label for="07_19">D @19</label></div> -->
+      <div class="controlItem"><input type="radio" name="xlayers" id="07_21" value="07_21" checked=checked /> <label for="07_21">D @21</label></div>
+    </form>
+    <form id="varSwitch" name="varSwitch" class="formControl">
+      <span class="title">Vars</span>
+      <!-- <div class="controlItem"><input type="radio" name="xvars" id="lista" value="lista"   /> <label for="lista">pe lista</label></div> -->
+      <div class="controlItem"><input type="radio" name="xvars" id="prezenta" value="prezenta"  /> <label for="prezenta">prezență</label></div>
+      <div class="controlItem"><input type="radio" name="xvars" id="LS" value="LS" checked=checked /> <label for="LS">LS</label></div>
+      <div class="controlItem"><input type="radio" name="xvars" id="LP" value="LP" /> <label for="LP">LP</label></div>
+      <div class="controlItem"><input type="radio" name="xvars" id="UM" value="UM" /> <label for="UM">UM</label></div>
+      <!--   <div class="controlItem"><input type="radio" name="xvars" id="muchextra" value="muchextra" /> <label for="muchextra">muchextra</label></div> -->
+      <div class="controlItem"><input type="radio" name="xvars" id="LT" value="LT" /> <label for="LT">LT </label></div>
+      <div class="controlItem"><input type="radio" name="xvars" id="ghost" value="ghost" /> <label for="ghost">LT&lt;5</label></div>
+      <div class="controlItem"><input type="radio" name="xvars" id="dead" value="dead" /> <label for="dead">LT=0</label></div>
+      <!-- <div class="controlItem"><input type="radio" name="xvars" id="extremes" value="extremes" /> <label for="extremes">records</label></div> -->
+      <!--  <hr>
+     <small> muchextra: LT-(LP+LS+UM)
+           <br>TODO case filter out LP=0</small> -->
+     <div id="scaleWrapper"> <span class="title">Scale</span>
+           <input type="range" min="0.25" max="2" value="1" step=".25" class="slider" id="scale" onchange="scaleBubbles(this.value)""></div>
+    </form>
+
+    <div id="controlInfo" ts="07_21" xvar="LS">
+      <span class="ts">07_21</span>
+      &rarr;
+      <span class="xvar">LS</span><br />
+      (scale <span class="range">1</span>)
+  </div>
+  <div class="controlItem legenda"><small>
+    <span><b>LS</b>: listă specială,</span>
+    <span><b>LP</b>: listă permanentă,</span>
+    <span><b>UM</b>: urnă mobilă, </span>
+    <span><b>LT</b>: total voturi</span>
+  </small></div>
+  </div>
+  <div id="map"></div>
+  <link rel="stylesheet" href="app/assets/vendor/leaflet/leaflet.css" />
+  <script src="app/assets/vendor/leaflet/leaflet.js"></script>
+  <script src="app/assets/vendor/leaflet/leaflet.ajax.min.js"></script>
+  <script src="app/assets/vendor/leaflet/leaflet-providers.js"></script>
+  <script src="app/assets/vendor/leaflet/leaflet.spin.js"></script>
+  <script src="app/assets/vendor/spin.min.js"></script>
+  <script src="app/assets/vendor/leaflet/leaflet.label.js"></script>
+  <script src="app/totallynotgay.js"></script>
+</body>
+
+</html>

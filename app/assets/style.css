@@ -181,7 +181,7 @@ body {
 }
 
 .leaflet-popup-pane .leaflet-popup  {
-  max-width: 250px;
+  max-width: 380px;
 }
 .leaflet-popup-pane  .leaflet-popup-content-wrapper {
   border-radius: 3px;
@@ -213,6 +213,11 @@ body {
 .mapTitle a {
   color: LightYellow !important;
 }
+
+/*
+  GO RESPONSIVE
+*/
+
 @media screen and (max-width: 800px) {
   #topControl {
      max-width: 100%;

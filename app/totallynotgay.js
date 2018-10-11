@@ -1,12 +1,15 @@
     // var timestamps = ['06_13', '06_21', '07_13', '07_21'];
     // var options = ['lista', 'LT', 'LS', 'LP', 'UM', 'dead', 'ghost'];
 
-  var geojsonLayer = new L.GeoJSON.AJAX("data/generated/localitati.json", {
+// var markers = L.markerClusterGroup();
+  var geojsonLayer = new L.GeoJSON.AJAX("data/generated/sectii.json", {
     style: layerStyle,
+
     onEachFeature: onEachFeature,
     pointToLayer: function(feature, latlng) { return L.circleMarker(latlng) }
   });
 
+// markers.addLayer(geojsonLayer);
 
   // var romaniaShape= new L.GeoJSON.AJAX("data/gis/romania-borders.json", { style: stilGranita}).addTo(map);
 
@@ -21,9 +24,9 @@
   //   var romaniaShape = new L.GeoJSON.AJAX("data/gis/romania-borders.json", { style: stilGranita} );
 
   var stilJudete = {
-    "color": "SteelBlue",
+    "color": "LightSteelBlue",
     "weight": 2,
-    "opacity": .4,
+    "opacity": .6,
     "fillColor": "rgba(213, 239, 255, .85)",
     "fillOpacity": .5
     // "dashArray": "2, 6"
@@ -36,7 +39,7 @@
     zoom: 7,
     zoomControl: false, // so we move zoom to the top right corner, see below
     minZoom: 6,
-    maxZoom: 10,
+    maxZoom: 15,
     // fullscreenControl: true,
     maxBounds: [
       [43, 18],
@@ -47,6 +50,7 @@
     // layers: [romaniaShape, geojsonLayer]
     layers: [judeteShape, geojsonLayer]
   });
+   // map.addLayer(markers);
   map.attributionControl.addAttribution("<b>Sursă date</b>: <a target='_blank' href='https://prezenta.bec.ro'>Biroul Electoral Central</a>");
   new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
   // L.tileLayer.provider('Esri.WorldTopoMap').addTo(map);
@@ -163,8 +167,8 @@ info.addTo(map);
       feature = marker.feature;
 
         // Create custom popup content
-        var out = "<header><strong>" + feature.props.nume_sectie + "</strong>, ";
-                out += "" + feature.props.localitate + " – " + feature.props.jud + feature.props.nr_sectie + "<br/>Înscriși pe lista: <b>" + feature.props.pe_lista + "</b></header>";
+        var out = "<header><strong>" + feature.props.nume + "</strong>, ";
+                out += "" + feature.props.localitate + " – " + feature.props.jud + feature.props.nr + "<br/>Înscriși pe lista: <b>" + feature.props.pe_lista + "</b></header>";
         // out += JSON.stringify(feature.props.ts, null, 2)
         out += locationProfie(feature.props.ts,feature.props.pe_lista);
         var popupContent = out;
