@@ -35,7 +35,7 @@ $geojson->type='FeatureCollection';
 $geojson->features=[];
 foreach ($participare_obj as $siruta => $one_loc) {
     if (isset($gis_arr[$siruta])) {
-
+        $ii=0;
         foreach ($one_loc->sectii as $nr_sectie => $one_sectie) {
             $onePoint= new \stdClass();
             $onePoint->type='Feature';
@@ -48,12 +48,15 @@ foreach ($participare_obj as $siruta => $one_loc) {
             $onePoint->geometry->coordinates=new \stdClass();
             /*
                 SLIGHTLY SHIFT COORDINATES
+                build a spiral, increment distance and bearing on each sectie in same siruta
             */
 
-            // $onePoint->geometry->coordinates = array_map('shift_coords', $gis_arr[$siruta]['coordinates']);
-            $onePoint->geometry->coordinates = $gis_arr[$siruta]['coordinates'];
-            array_walk($gis_arr[$siruta]['coordinates'], "shift_coords", 0.0003);
-            // array_walk($onePoint->geometry->coordinates, 'shift_coords', 0.001*$ii);
+            // $onePoint->geometry->coordinates = $gis_arr[$siruta]['coordinates'];
+            // array_walk($gis_arr[$siruta]['coordinates'], "shift_coords", 0.0003);
+
+            // https://www.cosmocode.de/en/blog/gohr/2010-06/29-calculate-a-destination-coordinate-based-on-distance-and-bearing-in-php
+            $ii = $ii > 360 ? 0 : $ii+2; // dumb degrees incrementer
+            $onePoint->geometry->coordinates = geo_destination($gis_arr[$siruta]['coordinates'], $ii/75, $ii*3);
 
             $onePoint->props->nr = $nr_sectie;
             $onePoint->props->nume = $one_sectie->{'nume sectie'};
@@ -68,7 +71,6 @@ foreach ($participare_obj as $siruta => $one_loc) {
 
             $zz = clone $onePoint;
             array_push($geojson->features, $zz);
-            unset($zz);
         }
     }
 }

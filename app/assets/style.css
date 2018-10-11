@@ -92,7 +92,7 @@ body {
 
 #controlInfo {
   font-size: 12px;
-  display: none;
+  /*display: none;*/
 }
 
 #scale {

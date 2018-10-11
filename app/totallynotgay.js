@@ -40,6 +40,7 @@
     zoomControl: false, // so we move zoom to the top right corner, see below
     minZoom: 6,
     maxZoom: 15,
+    zoomDelta: 0.15, //not working in leaflet 0.7?
     // fullscreenControl: true,
     maxBounds: [
       [43, 18],
@@ -91,6 +92,8 @@ info.addTo(map);
   /*end info bpx*/
 
   function layerStyle(feature) {
+    const max_radius = 50
+
     selectedLayer = document.getElementById('controlInfo').getAttribute("ts") ? document.getElementById('controlInfo').getAttribute("ts") : timestamps[0];
     selectedVar = document.getElementById('controlInfo').getAttribute("xvar") ? document.getElementById('controlInfo').getAttribute("xvar") : options[0];
     scaleLevel = document.getElementById('scale').value ? document.getElementById('scale').value : 1 ;
@@ -149,12 +152,7 @@ info.addTo(map);
         max = 1000;
     }
 
-
-    // radius=Math.round(feature.props.ts[selectedLayer][selectedVar]/10,0);
-    //  0 → 0
-    //  max → 50
-    // xStyle.radius = Math.floor(Math.log(value + 1.72)) * factor * scaleLevel;
-    xStyle.radius = Math.round(value * 50 / max, 0) * scaleLevel;
+    xStyle.radius = Math.round(value * max_radius / max, 0) * scaleLevel;
     xStyle.fillColor = getColor(value, max);
     xStyle.weight = value >> 0 ? 2 : 0;
     return xStyle;
@@ -192,7 +190,6 @@ info.addTo(map);
 
   function highlightFeature(e) {
     var layer = e.target;
-
     layer.setStyle({
       weight: 7,
       color: 'Red',
