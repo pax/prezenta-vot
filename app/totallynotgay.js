@@ -49,7 +49,7 @@
     // zoomControl:false ,
     // scrollWheelZoom: false,
     // layers: [romaniaShape, geojsonLayer]
-    layers: [judeteShape, geojsonLayer]
+    layers: [geojsonLayer, judeteShape]
   });
    // map.addLayer(markers);
   map.attributionControl.addAttribution("<b>Sursă date</b>: <a target='_blank' href='https://prezenta.bec.ro'>Biroul Electoral Central</a>");
