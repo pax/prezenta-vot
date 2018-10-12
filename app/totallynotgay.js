@@ -125,7 +125,7 @@ info.addTo(map);
         max = 5600;
         break;
       case 'ghost':
-        value = (feature.props.ts[selectedLayer]['LT'] <= 5) && (feature.props.ts[selectedLayer]['LT'] >= 0) ? 10 : 0;
+        value = (feature.props.ts[selectedLayer]['LT'] <= 5) && (feature.props.ts[selectedLayer]['LT'] >= 0) ? 5 : 0;
         max = 50;
         break;
       case 'LP':
@@ -137,8 +137,8 @@ info.addTo(map);
         max = 1000;
         break;
       case 'UM':
-        value = feature.props.ts[selectedLayer][selectedVar];
-        max = 366;
+        value = feature.props.ts[selectedLayer][selectedVar]/2;
+        max = 500;
         break;
       case 'LT':
         value = feature.props.ts[selectedLayer][selectedVar]/3;
