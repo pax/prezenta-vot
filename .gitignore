@@ -4,5 +4,8 @@
 *_obsolete*
 _obsolete
 _test
+*_test*
 data/sources/
 */vendor/*
+.htaccess
+*.htaccess*
