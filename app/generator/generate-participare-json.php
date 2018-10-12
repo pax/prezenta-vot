@@ -43,7 +43,8 @@ echo '<p>masterdata:  '.count($masterData).' rows</p>';
 
 // pr($masterData);
 
-saveFile(json_encode($masterData, JSON_PRETTY_PRINT), $target_json);
+// saveFile(json_encode($masterData, JSON_PRETTY_PRINT), $target_json);
+saveFile(json_encode($masterData), $target_json);
 
 // array_to_csv($masterData, $target_csv);
 

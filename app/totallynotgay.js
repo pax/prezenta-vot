@@ -144,6 +144,10 @@ info.addTo(map);
         value = feature.props.ts[selectedLayer][selectedVar]/3;
         max = 1600;
         break;
+      case 'observatori':
+        value = feature.props.observatori ? 5 : 0;
+        max = 50;
+        break;
       case 'extremes':
         // here we should record the biggest change
         break;

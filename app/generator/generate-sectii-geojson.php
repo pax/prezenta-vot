@@ -12,8 +12,20 @@ $rustart = getrusage();
 $participare_json='../../data/generated/participare.json';
 $gis_csv='../../data/gis/ro_localitati_punct-min.csv';
 $target_json='../../data/generated/sectii.json';
+$prezenta_observatori='../../data/observatori.csv';
 
 require('functions.php');
+
+
+/*
+    parse OBServatori
+ */
+$observatori = file($prezenta_observatori, FILE_IGNORE_NEW_LINES);
+array_walk($observatori, 'trim_spaces');
+function trim_spaces(&$item, $key)
+{
+    $item=str_replace(' ', '', $item);
+}
 
 // load json into obj
 $participare_data = file_get_contents($participare_json);
@@ -57,7 +69,6 @@ foreach ($participare_obj as $siruta => $one_loc) {
             // https://www.cosmocode.de/en/blog/gohr/2010-06/29-calculate-a-destination-coordinate-based-on-distance-and-bearing-in-php
             $ii = $ii > 360 ? 0 : $ii+2; // dumb degrees incrementer
             $onePoint->geometry->coordinates = geo_destination($gis_arr[$siruta]['coordinates'], $ii/75, $ii*3);
-
             $onePoint->props->nr = $nr_sectie;
             $onePoint->props->nume = $one_sectie->{'nume sectie'};
             $onePoint->props->pe_lista = $one_sectie->{'pe lista'};
@@ -67,6 +78,10 @@ foreach ($participare_obj as $siruta => $one_loc) {
                 foreach ($one_ts as $varName => $value) {
                     $onePoint->props->ts->$ts->$varName = $value;
                 }
+            }
+            //  check if observatori
+            if (in_array($participare_obj->$siruta->county.$nr_sectie, $observatori)) {
+                $onePoint->props->observatori = 'da';
             }
 
             $zz = clone $onePoint;
