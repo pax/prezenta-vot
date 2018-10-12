@@ -49,8 +49,12 @@
     // zoomControl:false ,
     // scrollWheelZoom: false,
     // layers: [romaniaShape, geojsonLayer]
-    layers: [geojsonLayer, judeteShape]
+    layers: [judeteShape, geojsonLayer]
   });
+judeteShape.setZIndex(1);
+geojsonLayer.setZIndex(2);
+
+
    // map.addLayer(markers);
   map.attributionControl.addAttribution("<b>Sursă date</b>: <a target='_blank' href='https://prezenta.bec.ro'>Biroul Electoral Central</a>");
   new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
@@ -64,39 +68,62 @@
 
   selectedLayer = document.getElementById('controlInfo').getAttribute("ts");
   selectedVar = document.getElementById('controlInfo').getAttribute("xvar");
-  scaleLevel = document.getElementById('scale').value;
+  scaleLevel = document.getElementById('controlInfo').getAttribute("range");  
 
-var info = L.control({ position: 'topleft' });
-  info.onAdd = function(map) {
+var titleBox = L.control({ position: 'topleft' });
+  titleBox.onAdd = function(map) {
     this._div = L.DomUtil.create('div', 'mapTitle');
     this._div.innerHTML="<h1>Prezența la vot la referendumul pentru modificarea Constituției.</h1> <span> &larr; <a href='https://votcorect.ro'>votcorect.ro</a> / sursă date : <a target='_blank' href='https://prezenta.bec.ro'>BEC</a> </span>";
     // this.update();
     return this._div;
   };
-info.addTo(map);
+titleBox.addTo(map);
 
   /* info box
   - - - - - - - - - - - - - - - - - - - - -  */
-/*
-  var info = L.control({ position: 'topright' });
-  info.onAdd = function(map) {
-    this._div = L.DomUtil.create('div', 'infoBox mapControl');
+
+  var controlBox = L.control({ position: 'topright' });
+  controlBox.onAdd = function(map) {
+    this._div = L.DomUtil.create('div', 'controlBoxBox mapControl');
     this.update();
     return this._div;
   };
-  info.update = function(props) {
-    this._div.innerHTML = props ? "<header><strong>" + props.nume_sectie + "</strong> (" + props.jud + props.nr_sectie + ") – " + props.localitate + "<br><small>Înscriși pe lista: <b>" + props.pe_lista + "</b></small></header>" + locationProfie(props.ts, props.pe_lista) : 'click pe o localitate pentru informații suplimentare';
+  controlBox.update = function(props) {
+    this._div.innerHTML =
+    '<div id="topControl">'
+    + '<form id="timestamp" name="timestamp" class="formControl"><span class="title">Timestamps</span><div class="controlItem"><input type="radio" name="xlayers" id="06_21" value="06_21" /><label for="06_21">S @21</label></div><div class="controlItem"><input type="radio" name="xlayers" id="07_21" value="07_21" checked=checked /><label for="07_21">D @21</label></div></form>'
+    + '<form id="varSwitch" name="varSwitch" class="formControl"><span class="title">Vars</span><div class="controlItem"><input type="radio" name="xvars" id="prezenta" value="prezenta" /><label for="prezenta">prezență</label></div><div class="controlItem"><input type="radio" name="xvars" id="LS" value="LS" checked=checked /><label for="LS">LS</label></div><div class="controlItem"><input type="radio" name="xvars" id="LP" value="LP" /><label for="LP">LP</label></div><div class="controlItem"><input type="radio" name="xvars" id="UM" value="UM" /><label for="UM">UM</label></div><div class="controlItem"><input type="radio" name="xvars" id="LT" value="LT" /><label for="LT">LT </label></div>'
+    + '<div class="controlItem"><input type="radio" name="xvars" id="ghost" value="ghost" /><label for="ghost">LT&lt;5</label></div><div class="controlItem"><input type="radio" name="xvars" id="dead" value="dead" /><label for="dead">LT=0</label></div><div class="controlItem"><input type="radio" name="xvars" id="observatori" value="observatori" /><label for="observatori">MV</label></div>'
+    + '<div id="xzoom" class="controlItem"><span class="title">Scale</span><span class="button" id="zoomin">+</span><span class="button" id="zoomout">-</span>  </div>'
+    + '<!--<div id="scaleWrapper"><input type="range" min="0.25" max="2" value="1" step=".25" class="slider" id="scale" onchange="scaleBubbles(this.value)"></div>-->'
+    + '</form>'
+    + '<div class="controlItem legenda"><small><span><b>LS</b>: listă specială,</span><span><b>LP</b>: listă permanentă,</span><span><b>UM</b>: urnă mobilă, </span><span><b>LT</b>: total voturi</span><span><b>MV</b>: monitorizare vot</span></small></div></div>';
   };
-  info.addTo(map);*/
+  controlBox.addTo(map);
 
   /*end info bpx*/
+  
+
+document.querySelector('#xzoom #zoomin').addEventListener("click", function(){
+  currScaleLevel=Number(document.getElementById('controlInfo').getAttribute("range"));
+    document.getElementById('controlInfo').setAttribute("range", Number(currScaleLevel) + .25);
+    document.querySelector('#controlInfo .range').innerHTML = Number(currScaleLevel) + .25;
+    scaleBubbles(Number(currScaleLevel) + .25)
+});
+
+document.querySelector('#xzoom #zoomout').addEventListener("click", function(){
+  currScaleLevel=Number(document.getElementById('controlInfo').getAttribute("range"));
+    document.getElementById('controlInfo').setAttribute("range", Number(currScaleLevel) - .25);
+    document.querySelector('#controlInfo .range').innerHTML = Number(currScaleLevel) - .25;
+    scaleBubbles(Number(currScaleLevel) - .25)
+});
 
   function layerStyle(feature) {
     const max_radius = 50
 
-    selectedLayer = document.getElementById('controlInfo').getAttribute("ts") ? document.getElementById('controlInfo').getAttribute("ts") : timestamps[0];
-    selectedVar = document.getElementById('controlInfo').getAttribute("xvar") ? document.getElementById('controlInfo').getAttribute("xvar") : options[0];
-    scaleLevel = document.getElementById('scale').value ? document.getElementById('scale').value : 1 ;
+    selectedLayer = document.getElementById('controlInfo').getAttribute("ts")  ;
+    selectedVar =  document.getElementById('controlInfo').getAttribute("xvar")  ;
+    scaleLevel =   document.getElementById('controlInfo').getAttribute("range")  ;
 
     var xStyle = {
       // weight: 2,
@@ -106,7 +133,7 @@ info.addTo(map);
     xStyle.color = "White";
     // xStyle.fillColor = "MediumSlateBlue";
 
-
+     xStyle.radius = 0;
     switch (selectedVar) {
       case 'prezenta':
         value = feature.props.ts[selectedLayer]['LT'] / feature.props.pe_lista * 33;
@@ -254,8 +281,8 @@ if (document.varSwitch.xvars != null){
 
   function scaleBubbles(xvalue) {
     // document.querySelector('#controlInfo .range').innerHTML=value;
-    document.getElementById('scale').innerHTML = xvalue;
-    document.getElementById('scale').value = xvalue;
+    // document.getElementById('scale').innerHTML = xvalue;
+    // document.getElementById('scale').value = xvalue;
     document.getElementById('controlInfo').setAttribute("range", xvalue);
     document.querySelector('#controlInfo .range').innerHTML = xvalue;
     geojsonLayer.setStyle(layerStyle);

@@ -29,11 +29,11 @@ body {
 }
 
 #topControl {
-  position: absolute;
+/*  position: absolute;
   top: 1ex;
   right: 1ex;
-  z-index: 2;
-  max-width: 9em;
+  z-index: 99;*/
+  /*max-width: 9em;*/
 }
 
 #topControl form.formControl {
@@ -63,6 +63,7 @@ body {
   margin: 0 2ex 0 -0.4em;
   display: inline-block;
   border-bottom: 2px solid transparent;
+   background-color: rgb(255, 240, 245);
   /*min-width: 5em;*/
 }
 
@@ -74,11 +75,11 @@ body {
 
 #topControl .formControl label:before {
   content: '\26F6';
-  /*background-color: LightYellow;*/
+
   background-color: rgb(255, 240, 245);
   margin-top: -2px;
   margin-left: -2em;
-  padding: 2px;
+  padding: 3px 5px 5px 5px;
   padding-right: 1ex;
   border-bottom: 2px solid transparent;
 }
@@ -176,7 +177,7 @@ body {
 }
 
 .legenda span {
-  display: inline-block;
+  display: block;
 
 }
 
@@ -213,21 +214,41 @@ body {
 .mapTitle a {
   color: LightYellow !important;
 }
-
+#xzoom {
+  margin-left: -1.5ex;
+  margin-top: .75ex;
+}
+#xzoom span.button {
+  font-family: monospace;
+  display: inline-block;
+  line-height: 1;
+  padding: 0 3px;
+  border: 1px solid #999;
+  margin-right: 2px;
+  background-color:#999;
+  color: White;
+  /*font-weight: bold;*/
+  font-size: 1.2em;
+  text-align: center;
+  cursor: pointer;
+}
+#xzoom span.button:hover{
+  background-color: #AAA;
+}
 /*
   GO RESPONSIVE
 */
 
 @media screen and (max-width: 800px) {
   #topControl {
-     max-width: 100%;
+    /* max-width: 100%;
       background-color: rgb(33,150,243);
       color: White;
       text-shadow: 1px 1px 1px rgba(0,0,0,.2); 
       top: 0;
       right: 0;
       margin: 0;
-      padding-bottom: 0;
+      padding-bottom: 0;*/
   /*left: 0;*/
   }
   #topControl .formControl label {
