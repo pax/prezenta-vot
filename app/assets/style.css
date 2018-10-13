@@ -36,60 +36,14 @@ body {
   /*max-width: 9em;*/
 }
 
-#topControl form.formControl {
-  margin-bottom: 0;
-  padding: 1em;
+#topControl .formControl {
+  margin-bottom: 1em;
+  /*padding: 1ex;*/
 }
 
-#topControl .controlItem {
-  color: #777;
-  padding-left: 1ex;
-}
+ 
 
-#topControl .formControl label:hover,
-#topControl .formControl label:hover:before {
-  /*background-color: MistyRose;*/
-  border-bottom: 2px solid SlateBlue;
-}
 
-#topControl .formControl input {
-  display: inline-block;
-}
-
-#topControl .formControl input+label {
-  cursor: pointer;
-  padding: 2px 0 2px 4px;
-  position: relative;
-  margin: 0 2ex 0 -0.4em;
-  display: inline-block;
-  border-bottom: 2px solid transparent;
-   background-color: rgb(255, 240, 245);
-  /*min-width: 5em;*/
-}
-
-#topControl .formControl input:checked+label {
-  color: DarkSlateBlue;
-  /*background-color: Khaki;*/
-  border-bottom: 2px solid DarkSlateBlue;
-}
-
-#topControl .formControl label:before {
-  content: '\26F6';
-
-  background-color: rgb(255, 240, 245);
-  margin-top: -2px;
-  margin-left: -2em;
-  padding: 3px 5px 5px 5px;
-  padding-right: 1ex;
-  border-bottom: 2px solid transparent;
-}
-
-#topControl .formControl input:checked+label:before {
-  content: '\26DD';
-  color: DarkSlateBlue;
-  /*background-color: Khaki;*/
-  border-bottom: 2px solid DarkSlateBlue;
-}
 
 #controlInfo {
   font-size: 12px;
@@ -196,7 +150,7 @@ body {
   padding: 2.5em 1.75em 2em 3em;
   max-width: 20em;
   border: 1px solid #FFF;
-  box-shadow: 0 0 1em rgba(0,0,0,.33); 
+  box-shadow: 0 0 1em rgba(0,0,0,.33);
   line-height: 1.2;
   color: White;
   text-shadow: 1px 1px 1px rgba(0,0,0,.33);
@@ -215,28 +169,39 @@ body {
   color: LightYellow !important;
 }
 #xzoom {
-  margin-left: -1.5ex;
-  margin-top: .75ex;
+  /*margin-left: -1.5ex;*/
+  /*margin-top: .75ex;*/
+}
+.button {
+  cursor: pointer;
+  padding: 0 3px;
+  background-color:#EEE;
+  line-height: 1;
+  display: inline-block;
+  border: 1px solid #DDD;
+  margin: 1px 1px 0 0 ;
+  border-radius: 1px;
+  padding: 3px 5px;
+   color: #666;
+  /*box-shadow: 1px 1px 0 #CCC;*/
+}
+.button:hover{
+  background-color: #E0E0E0;
+  border: 1px solid #CCC;
+}
+.button.clicked{
+  color: whitesmoke;
+  background-color: #666;
 }
 #xzoom span.button {
+  padding: 1px 3px;
   font-family: monospace;
-  display: inline-block;
-  line-height: 1;
-  padding: 0 3px;
-  border: 1px solid #999;
-  margin-right: 2px;
-  background-color:#999;
-  color: White;
-  /*font-weight: bold;*/
   font-size: 1.2em;
   text-align: center;
-  cursor: pointer;
 }
-#xzoom span.button:hover{
-  background-color: #AAA;
-}
-  .xchart {
-  background: lightyellow;
+
+.chart {
+  background: white;
   width: 280px;
   height: 80px;
   border-left: 1px dotted #555;
@@ -248,53 +213,7 @@ body {
 */
 
 @media screen and (max-width: 800px) {
-  .controlBoxBox {
-   background-color: rgb(33,150,243);
-      color: White;
-      text-shadow: 1px 1px 1px rgba(0,0,0,.2);   
- 
-  }
-  .controlBoxBox .formControl label {
-     color: WhiteSmoke;
-     background-color: rgb(33,150,243) !important;
-  }
-  .controlBoxBox .formControl label:before  {
-    background-color: rgb(33,150,243) !important;
-    color: WhiteSmoke;
-    border: none;
-  }
-  .controlBoxBox .formControl input:checked+label,
-  .controlBoxBox .formControl input:checked+label:before {
-    color: Yellow;
-    border: none;
-  }
-  .controlBoxBox:before{
-    content: 'Prezența la vot la referendumul pentru modificarea Constituției – octombrie 2018';
-    border-bottom: 1px solid #CCC;
-    padding-bottom: 1ex;
-    margin-top: 1ex;
-    font-size: 17px;
-    display: block;
-    line-height: 1.4;
-  }
-  .controlBoxBox:after{
-    content: 'Harta tinde să se încarce greoi pe mobil – pentru o expieriență acceptabilă recomandăm vizualizarea pe desktop';
-    background-color: RoyalBlue;
-    padding: 1ex;
-    color: Yellow;
-    margin-top: 1ex;
-    font-size: 17px;
-    display: block;
-    line-height: 1.4;
-  }
-  .controlBoxBox .controlItem {
-    display: inline-block;
-    /*margin: .25ex 0;*/
-    line-height: 1.5;
-  }
-  .controlBoxBox .formControl {
-    padding: .5ex !important;
-  }
+
   #scaleWrapper,
   .leaflet-control-attribution,
   .controlItem.legenda,
