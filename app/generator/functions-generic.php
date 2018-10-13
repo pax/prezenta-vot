@@ -169,3 +169,20 @@ function toDeg($rad)
 {
     return $rad * 180 / pi();
 }
+
+
+/*
+  Writes $data (string) to $file
+ */
+
+function writeFile($file, $data, $echo = true)
+{
+    $ret = file_put_contents($file, $data, LOCK_EX);
+    if ($ret === false) {
+        die('There was an error writing this file');
+    } else {
+        if ($echo) {
+            echo "<br><b>".round($ret/1000, 2)." Kb</b> &rarr; <code><a href=\"".$file."\">".$file."</a></code>";
+        }
+    }
+}
