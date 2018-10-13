@@ -235,6 +235,14 @@ body {
 #xzoom span.button:hover{
   background-color: #AAA;
 }
+  .xchart {
+  background: lightyellow;
+  width: 280px;
+  height: 80px;
+  border-left: 1px dotted #555;
+  border-bottom: 1px dotted #555;
+  padding: 20px 20px 20px 0;
+}
 /*
   GO RESPONSIVE
 */
