@@ -68,7 +68,7 @@ geojsonLayer.setZIndex(2);
 
   selectedLayer = document.getElementById('controlInfo').getAttribute("ts");
   selectedVar = document.getElementById('controlInfo').getAttribute("xvar");
-  scaleLevel = document.getElementById('controlInfo').getAttribute("range");  
+  scaleLevel = document.getElementById('controlInfo').getAttribute("range");
 
 var titleBox = L.control({ position: 'topleft' });
   titleBox.onAdd = function(map) {
@@ -119,7 +119,7 @@ titleBox.addTo(map);
   controlBox.addTo(map);
 
   /*end info bpx*/
-  
+
 
 document.querySelector('#xzoom #zoomin').addEventListener("click", function(){
   currScaleLevel=Number(document.getElementById('controlInfo').getAttribute("range"));
@@ -309,19 +309,42 @@ if (document.varSwitch.xvars != null){
     // return JSON.stringify(xjson);
     let xout = '<div class="locBadge">';
         xout += '<table ><thead><tr> <th>tstamp</th><th>LP</th><th>LS</th><th>UM</th><th>LT</th><th>prezență</th></tr></thead><tbody>';
-        for (var xsectie in xjson) {
-          if (xjson.hasOwnProperty(xsectie)) {
+
+        let svgplot='';
+        let svgdata=[];
+        let last='';
+        for (var timestamp in xjson) {
+          if (xjson.hasOwnProperty(timestamp)) {
             xout += '<tr>';
-            xout += "<td>" + xsectie + "</td>";
-            xout += " <td class=x" + xjson[xsectie]['LP'] + ">" + xjson[xsectie]['LP'] + '</td>';
-            xout += " <td class=x" + xjson[xsectie]['LS'] + ">" + xjson[xsectie]['LS'] + '</td>';
-            xout += " <td class=x" + xjson[xsectie]['UM'] + ">" + xjson[xsectie]['UM'] + '</td>';
-            xout += " <td class=x" + xjson[xsectie]['LT'] + ">" + xjson[xsectie]['LT'] + '</td>';
-            xout += " <td class='prezenta x" + xjson[xsectie]['LT'] + "'>" + (xjson[xsectie]['LT']*100/prezenta).toFixed(1) + '<small>&#37;</small></td>';
+            xout += "<td>" + timestamp + "</td>";
+            xout += " <td class=x" + xjson[timestamp]['LP'] + ">" + xjson[timestamp]['LP'] + '</td>';
+            xout += " <td class=x" + xjson[timestamp]['LS'] + ">" + xjson[timestamp]['LS'] + '</td>';
+            xout += " <td class=x" + xjson[timestamp]['UM'] + ">" + xjson[timestamp]['UM'] + '</td>';
+            xout += " <td class=x" + xjson[timestamp]['LT'] + ">" + xjson[timestamp]['LT'] + '</td>';
+            xout += " <td class='prezenta x" + xjson[timestamp]['LT'] + "'>" + (xjson[timestamp]['LT']*100/prezenta).toFixed(1) + '<small>&#37;</small></td>';
             xout += '</tr>';
+            svgdata[timestamp]=xjson[timestamp]['LT'];
+            last=timestamp;
+            // svgplot += ii*20 + ',' + xjson[timestamp]['LS']/10 + ' ';
+
           }
         }
-        xout += '</table></div>'
+        // maxval=svgdata.slice(-1)[0]
+        // console.log(svgdata.slice(-1));
+        // console.log(svgdata);
+        // console.log(last);
+        let ii=0;
+        let before = 0;
+        for (oneTs in svgdata){
+          // console.log(oneTs);
+          svgplot += ii*30 + ',' + (Number(svgdata[last]) - Number(svgdata[oneTs]))/5 + ' ' 
+          + (ii*30 + 15) + ',' + (Number(svgdata[last]) - Number(svgdata[oneTs]))/5 + ' ';
+          // svgplot += ii*30 + ',' + (Number(svgdata[oneTs]) - before )+ ' ';
+          before = Number(svgdata[oneTs]);
+             ii++;
+        }
+        svgplot = '<svg viewBox="0 0 500 100" class="xchart"> <polyline     fill="none"     stroke="#0074d9"     stroke-width="2"     points=" ' + svgplot + '"   />  </svg>'
+        xout += '</table>' + svgplot +'</div>';
     return xout;
   }
 
