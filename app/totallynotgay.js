@@ -44,7 +44,7 @@
       // fullscreenControl: true,
       maxBounds: [
         [43, 18],
-        [48.7, 30.9]
+        [49.7, 31]
       ],
       // zoomControl:false ,
       // scrollWheelZoom: false,
@@ -119,9 +119,7 @@
         '<!--<div class="controlItem legenda"><small><span><b>LS</b>: listă specială,</span><span><b>LP</b>: listă permanentă,</span><span><b>UM</b>: urnă mobilă, </span><span><b>LT</b>: total voturi</span><span><b>MV</b>: monitorizare vot</span></small></div></div>-->';
     };
     controlBox.addTo(map);
-
     /*end info bpx*/
-
 
     document.querySelector('#xzoom #zoomin').addEventListener("click", function() {
       currScaleLevel = Number(document.getElementById('controlInfo').getAttribute("range"));
@@ -138,62 +136,23 @@
     });
 
     /*
-    switches selected var / timestamp
+        switches selected var / timestamp
      */
     var toggles = document.querySelectorAll('.controlItem .btn-toggle')
     for (i = 0; i < toggles.length; i++) {
       toggles[i].addEventListener("click", function() {
-        // console.log(this.getAttribute("data-target"));
         document.querySelector('#controlInfo .' + this.getAttribute("data-target")).innerHTML = this.id;
         document.getElementById('controlInfo').setAttribute(this.getAttribute("data-target"), this.id);
         geojsonLayer.setStyle(layerStyle);
 
         // remove class='clicked' from all siblings
         let zzx = this.parentElement.parentElement.childNodes;
-        // console.log(zzx);
         for (i = 1; i < zzx.length; i++) {
-          // console.log(zzx[i]);
-          // console.log(ii);
           zzx[i].querySelector('.btn-toggle').classList.remove('clicked');
         }
         this.classList.add('clicked');
-        // currScaleLevel=Number(document.getElementById('controlInfo').getAttribute("range"));
-        //   document.getElementById('controlInfo').setAttribute("range", Number(currScaleLevel) - .25);
-        //   document.querySelector('#controlInfo .range').innerHTML = Number(currScaleLevel) - .25;
-        //   scaleBubbles(Number(currScaleLevel) - .25)
       });
     }
-
-
-    // .addEventListener("click", function(){
-    //     // console.log(this.data-target);
-    //     alert('lala');
-    //     // document.getElementById('controlInfo').setAttribute("range", Number(currScaleLevel) - .25);
-    //     // document.querySelector('#controlInfo .range').innerHTML = Number(currScaleLevel) - .25;
-    //     // scaleBubbles(Number(currScaleLevel) - .25)
-    // });
-
-    /*
-    //  read select
-      if (document.timestamp.xlayers != null) {
-      var rad = document.timestamp.xlayers;
-      for (var i = 0; i < rad.length; i++) {
-        rad[i].onclick = function() {
-          // let selectedLayer=this.value;
-
-          // document.getElementById('controlInfo').innerHTML=this.value;
-          document.querySelector('#controlInfo .ts').innerHTML = this.value;
-          document.getElementById('controlInfo').setAttribute("ts", this.value);
-          geojsonLayer.setStyle(layerStyle);
-        };
-      }
-      }
-      else {
-        document.querySelector('#controlInfo .ts').innerHTML = timestamps[0];
-          document.getElementById('controlInfo').setAttribute("ts", timestamps[0]);
-          geojsonLayer.setStyle(layerStyle);
-      }
-      */
 
     function layerStyle(feature) {
       const max_radius = 50
@@ -333,8 +292,10 @@
       let xout = '<div class="locBadge">';
       xout += '<table ><thead><tr> <th>tstamp</th><th>LP</th><th>LS</th><th>UM</th><th>LT</th><th>prezență</th></tr></thead><tbody>';
 
-      let svgplot = '';
-      let svgdata = [];
+      let svgplotLS = '';
+      let svgplotLT = '';
+      let svgdataLS = [];
+      let svgdataPrez = [];
       let last = '';
       for (var timestamp in xjson) {
         if (xjson.hasOwnProperty(timestamp)) {
@@ -346,28 +307,41 @@
           xout += " <td class=x" + xjson[timestamp]['LT'] + ">" + xjson[timestamp]['LT'] + '</td>';
           xout += " <td class='prezenta x" + xjson[timestamp]['LT'] + "'>" + (xjson[timestamp]['LT'] * 100 / prezenta).toFixed(1) + '<small>&#37;</small></td>';
           xout += '</tr>';
-          svgdata[timestamp] = xjson[timestamp]['LS'];
+          svgdataLS[timestamp] = xjson[timestamp]['LS'];
+          svgdataPrez[timestamp] =(xjson[timestamp]['LT'] * 1000 / prezenta).toFixed(0)
           last = timestamp;
           // svgplot += ii*20 + ',' + xjson[timestamp]['LS']/10 + ' ';
 
         }
       }
-      // maxval=svgdata.slice(-1)[0]
-      // console.log(svgdata.slice(-1));
-      // console.log(svgdata);
-      // console.log(last);
+/*   sparkline = '<svg class="sparkline x' + timestamp + xjson[timestamp]['LP'] + xjson[timestamp]['LT'] +'" width="100" height="30" stroke-width="3"></svg>';
+      xout += '</table>' + sparkline + '</div>';
+      sparkline(document.querySelector('x' + timestamp + xjson[timestamp]['LP'] + xjson[timestamp]['LT'] + ''), ['      + svgplot +']);*/
       let ii = 0;
-      let before = 0;
-      for (oneTs in svgdata) {
+      let beforeLS = 0;
+      for (oneTs in svgdataLS) {
         // console.log(oneTs);
-        svgplot += ii * 30 + ',' + (Number(svgdata[last]) - Number(svgdata[oneTs])) / 5 + ' ' +
-          (ii * 30 + 15) + ',' + (Number(svgdata[last]) - Number(svgdata[oneTs])) / 5 + ' ';
-        // svgplot += ii*30 + ',' + (Number(svgdata[oneTs]) - before )+ ' ';
-        before = Number(svgdata[oneTs]);
+        svgplotLS += ii * 30 + ',' + (Number(svgdataLS[last]) - Number(svgdataLS[oneTs])) / 5 + ' ' +
+          (ii * 30 + 15) + ',' + (Number(svgdataLS[last]) - Number(svgdataLS[oneTs])) / 5 + ' ';
+        // svgplot += ii*30 + ',' + (Number(svgdataLS[oneTs]) - beforeLS )+ ' ';
+        beforeLS = Number(svgdataLS[oneTs]);
         ii++;
       }
-      svgplot = '<svg viewBox="0 0 500 100" class="xchart"> <polyline     fill="none"     stroke="#0074d9"     stroke-width="2"     points=" ' + svgplot + '"   />  </svg>'
-      xout += '</table>' + svgplot + '</div>';
+      svgplotLS = '<svg viewBox="0 0 300 140"  width="140" height="100" class="xchart"><g class="labels x-labels"><text x="5" y="5" class="label-title">Liste speciale</text></g><polyline fill="none" stroke="red" stroke-width="4" points=" ' + svgplotLS + '"/></svg>';
+
+      ii = 0;
+      let beforeLT = 0;
+      for (oneTs in svgdataPrez) {
+        // console.log(oneTs);
+        svgplotLT += ii * 30 + ',' + (Number(svgdataPrez[last]) - Number(svgdataPrez[oneTs])) / 5 + ' ' +
+          (ii * 30 + 15) + ',' + (Number(svgdataPrez[last]) - Number(svgdataPrez[oneTs])) / 5 + ' ';
+        // svgplot += ii*30 + ',' + (Number(svgdataPrez[oneTs]) - beforeLT )+ ' ';
+        beforeLT = Number(svgdataPrez[oneTs]);
+        ii++;
+      }
+      svgplotLT = '<svg viewBox="0 0 300 140"  width="140" height="100" class="xchart"><g class="labels x-labels"><text x="5" y="5" class="label-title">Prezență</text></g><polyline fill="none" stroke="blue" stroke-width="4" points=" ' + svgplotLT + '"/></svg>';
+
+      xout += '</table>' + svgplotLS + svgplotLT + '</div>';
       return xout;
     }
 
