@@ -4,18 +4,24 @@ $rustart = getrusage();
 require('functions.php');
 $source_csv_dir='../../data/sources/';
 $target_json='../../data/generated/participare.json';
+$timestamps_index='../../data/generated/timestamps.json';
 
 $ze_csvs = glob($source_csv_dir."*.csv");
 
 // pr($ze_csvs);
 // exit;
-
+$index_var=[];
 foreach ($ze_csvs as $oneCsv) {
 
     $trimestamps=explode('-', $oneCsv);
     $csv[$trimestamps[2]]=csv_to_array($oneCsv);
-    echo '<br/>-'.$oneCsv.' <em>'.count($csv[$trimestamps[2]]). '</em> rows';
+    echo '<br/>&rarr; <code><b>'.$trimestamps[2].'</b></code> <em>'.count($csv[$trimestamps[2]]). '</em> rows';
+    $index_var[]=$trimestamps[2];
 }
+
+
+writeFile($timestamps_index, json_encode($index_var));
+
 $masterData = [];
 
 // pr($csv);
