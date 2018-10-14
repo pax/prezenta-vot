@@ -2,7 +2,7 @@ body {
   font-family: sans-serif;
   margin: 0;
   padding: 0;
-  background-image: url('img/bcg-noise-1.png');
+  /*background-image: url('img/bcg-noise-1.png');*/
 }
 
 #map {
@@ -41,13 +41,11 @@ body {
   /*padding: 1ex;*/
 }
 
- 
-
-
 
 #controlInfo {
   font-size: 12px;
-  display: none;
+  position: absolute; z-index: 999; left: 40vw; top: 0; background-color: Yellow;
+  /*display: none;*/
 }
 
 #scale {
@@ -175,7 +173,7 @@ body {
 .button {
   cursor: pointer;
   padding: 0 3px;
-  background-color:#EEE;
+  background-color:PaleTurquoise;
   line-height: 1;
   display: inline-block;
   border: 1px solid #DDD;
@@ -183,6 +181,7 @@ body {
   border-radius: 1px;
   padding: 3px 5px;
    color: #666;
+   text-shadow: 1px 1px 0 White;
   /*box-shadow: 1px 1px 0 #CCC;*/
 }
 .button:hover{
@@ -191,7 +190,9 @@ body {
 }
 .button.clicked{
   color: whitesmoke;
-  background-color: #666;
+  background-color: MediumSlateBlue;
+  border-color: #AAC;
+  text-shadow: 1px 1px 0 #333;
 }
 #xzoom span.button {
   padding: 1px 3px;
@@ -214,7 +215,7 @@ body {
   GO RESPONSIVE
 */
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 680px) {
 
   #scaleWrapper,
   .leaflet-control-attribution,
