@@ -1,27 +1,16 @@
-    // var timestamps = ['06_13', '06_21', '07_13', '07_21'];
+  // TO DO, read from timestamps.json
+  var timestamps = ["06_10","06_13","06_16","06_19","06_21","07_10","07_13","07_16","07_19","07_21"]
     // var options = ['lista', 'LT', 'LS', 'LP', 'UM', 'dead', 'ghost'];
 
     // var markers = L.markerClusterGroup();
+    // var myRenderer = L.canvas({ padding: 0.5 });
     var geojsonLayer = new L.GeoJSON.AJAX("data/generated/sectii.json", {
       style: layerStyle,
-
+      // renderer: myRenderer,
       onEachFeature: onEachFeature,
       pointToLayer: function(feature, latlng) { return L.circleMarker(latlng) }
     });
 
-    // markers.addLayer(geojsonLayer);
-
-    // var romaniaShape= new L.GeoJSON.AJAX("data/gis/romania-borders.json", { style: stilGranita}).addTo(map);
-
-    // var stilGranita = {
-    //    "color": "SteelBlue",
-    //    "weight": 1,
-    //    "opacity": 1,
-    //      "fillColor": "PaleTurquoise",
-    //   // "fillOpacity": 1
-    //    // "dashArray": "5, 5"
-    // }
-    //   var romaniaShape = new L.GeoJSON.AJAX("data/gis/romania-borders.json", { style: stilGranita} );
 
     var stilJudete = {
       "color": "LightSteelBlue",
@@ -33,40 +22,42 @@
     }
     var judeteShape = new L.GeoJSON.AJAX("data/gis/ro_judete_poligon.json", { style: stilJudete });
 
-
     var map = L.map('map', {
+      preferCanvas: true,
       center: [46, 25],
       zoom: 7,
       zoomControl: false, // so we move zoom to the top right corner, see below
       minZoom: 6,
       maxZoom: 15,
-      zoomDelta: 0.15, //not working in leaflet 0.7?
+
       // fullscreenControl: true,
       maxBounds: [
         [43, 18],
         [49.7, 31]
       ],
-      // zoomControl:false ,
+      zoomControl:false, //we add it in different place
       // scrollWheelZoom: false,
       // layers: [romaniaShape, geojsonLayer]
-      layers: [judeteShape, geojsonLayer]
+      layers: [geojsonLayer]
     });
-    judeteShape.setZIndex(1);
-    geojsonLayer.setZIndex(2);
-
+    // judeteShape.setZIndex(1);
+    // geojsonLayer.setZIndex(2);
+    new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
+  judeteShape.addTo(map);
 
     // map.addLayer(markers);
     map.attributionControl.addAttribution("<b>Sursă date</b>: <a target='_blank' href='https://prezenta.bec.ro'>Biroul Electoral Central</a>");
-    new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
+
     // L.tileLayer.provider('Esri.WorldTopoMap').addTo(map);
     // L.tileLayer.provider('Esri.WorldTerrain').addTo(map);
     L.tileLayer.provider('CartoDB.Positron').addTo(map);
     // L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(map);
+    // L.tileLayer.provider('OpenTopoMap').addTo(map);
     // L.tileLayer.provider('Stamen.Watercolor').addTo(map);
     // L.tileLayer.provider('CartoDB.DarkMatter').addTo(map);
     // L.tileLayer.provider('Stamen.TonerLite').addTo(map);
 
-    selectedLayer = document.getElementById('controlInfo').getAttribute("ts");
+    selectedTs = document.getElementById('controlInfo').getAttribute("ts");
     selectedVar = document.getElementById('controlInfo').getAttribute("xvar");
     scaleLevel = document.getElementById('controlInfo').getAttribute("range");
 
@@ -78,6 +69,7 @@
       return this._div;
     };
     titleBox.addTo(map);
+     
 
     /* info box
     - - - - - - - - - - - - - - - - - - - - -  */
@@ -112,10 +104,9 @@
         '<div class="controlItem"><span id="ghost" data-target="xvar" class="button btn-toggle">&lt; 5 voturi</span></div>' +
         '<div class="controlItem"><span id="dead" data-target="xvar" class="button btn-toggle">niciun vot</span></div>' +
         '<div class="controlItem"><span id="observatori" data-target="xvar" class="button btn-toggle">observatori</span></div>' +
-        '</div><div class="formControl">' +
-        '<div id="xzoom" class="controlItem"><span class="title">Scale</span><span class="button btn-toggle" id="zoomin">+</span><span class="button btn-toggle" id="zoomout">-</span>  </div>' +
-        '<!--<div id="scaleWrapper"><input type="range" min="0.25" max="2" value="1" step=".25" class="slider" id="scale" onchange="scaleBubbles(this.value)"></div>-->' +
         '</div>' +
+        '<div class="formControl"><div id="xzoom" class="controlItem"><span class="title">Scale</span><span class="button" id="zoomin">+</span><span class="button" id="zoomout">-</span>  </div></div>' +
+        '<div class="formControl"><div id="diff" class="controlItem"><span id="dead" data-target="diff" class="button btn-toggle">show diff</span></div></div>' +
         '<!--<div class="controlItem legenda"><small><span><b>LS</b>: listă specială,</span><span><b>LP</b>: listă permanentă,</span><span><b>UM</b>: urnă mobilă, </span><span><b>LT</b>: total voturi</span><span><b>MV</b>: monitorizare vot</span></small></div></div>-->';
     };
     controlBox.addTo(map);
@@ -143,7 +134,8 @@
       toggles[i].addEventListener("click", function() {
         document.querySelector('#controlInfo .' + this.getAttribute("data-target")).innerHTML = this.id;
         document.getElementById('controlInfo').setAttribute(this.getAttribute("data-target"), this.id);
-        geojsonLayer.setStyle(layerStyle);
+        // geojsonLayer.setStyle(layerStyle);
+        scaleBubbles(Number(scaleLevel));
 
         // remove class='clicked' from all siblings
         let zzx = this.parentElement.parentElement.childNodes;
@@ -157,71 +149,70 @@
     function layerStyle(feature) {
       const max_radius = 50
 
-      selectedLayer = document.getElementById('controlInfo').getAttribute("ts");
+      selectedTs = document.getElementById('controlInfo').getAttribute("ts");
       selectedVar = document.getElementById('controlInfo').getAttribute("xvar");
       scaleLevel = document.getElementById('controlInfo').getAttribute("range");
-
+      let selectedTsIndex = timestamps.indexOf(selectedTs);
       var xStyle = {
+        radius: 1,
         // weight: 2,
-        fillOpacity: 0.85,
-        stroke: true
+        // fillOpacity: 0.85,
+        // stroke: true
       };
-      xStyle.color = "White";
-      // xStyle.fillColor = "MediumSlateBlue";
 
-      xStyle.radius = 0;
+      // if (timestamps[selectedTsIndex - 1]) {
+      // let previousTS=timestamps[selectedTsIndex - 1];
+
       switch (selectedVar) {
         case 'prezenta':
-          value = feature.props.ts[selectedLayer]['LT'] / feature.props.pe_lista * 33;
-          max = 330;
-          break;
-        case 'muchextra':
-          value = feature.props.ts[selectedLayer]['LT'] - feature.props.ts[selectedLayer]['LP'] - feature.props.ts[selectedLayer]['LS'] - feature.props.ts[selectedLayer]['UM'] + 0;
-          max = 50;
+          value = feature.props.ts[selectedTs]['LT'] / feature.props.pe_lista;
+          max = 10;
           break;
         case 'dead':
-          value = feature.props.ts[selectedLayer]['LT'] == 0 ? 5 : 0;
-          max = 50;
-          break;
-        case 'lista':
-          value = feature.props.pe_lista;
-          max = 5600;
+          value = feature.props.ts[selectedTs]['LT'] == 0 ? 5 : 0;
+          max = 35;
           break;
         case 'ghost':
-          value = (feature.props.ts[selectedLayer]['LT'] <= 5) && (feature.props.ts[selectedLayer]['LT'] >= 0) ? 5 : 0;
-          max = 50;
+          // value = (feature.props.ts[selectedTs]['LT'] <= 5) && (feature.props.ts[selectedTs]['LT'] <= 0) ? 5 : 0;
+          value = (feature.props.ts[selectedTs]['LT'] <= 5) && (feature.props.ts[selectedTs]['LT'] >= 0) ? 5 : 0;
+          max = 35;
           break;
         case 'LP':
-          value = feature.props.ts[selectedLayer][selectedVar] / 3;
+          value = feature.props.ts[selectedTs]['LP'];
           max = 1527;
           break;
         case 'LS':
-          value = feature.props.ts[selectedLayer][selectedVar];
-          max = 1000;
+          value = feature.props.ts[selectedTs]['LS'];
+          // value = feature.props.ts[selectedTs]['LT']   == 0 ? 5 : 0;
+          max = 1100;
           break;
         case 'UM':
-          value = feature.props.ts[selectedLayer][selectedVar] / 2;
+          value = feature.props.ts[selectedTs]['UM'];
           max = 500;
           break;
         case 'LT':
-          value = feature.props.ts[selectedLayer][selectedVar] / 3;
+          value = feature.props.ts[selectedTs]['LT'];
           max = 1600;
           break;
         case 'observatori':
           value = feature.props.observatori ? 5 : 0;
-          max = 50;
+          max = 40;
           break;
-        case 'extremes':
-          // here we should record the biggest change
-          break;
+
         default:
-          value = feature.props.ts[selectedLayer][selectedVar];
+          value = feature.props.ts[selectedTs][selectedVar];
           max = 1000;
+          alert ('unknown selected var');
       }
 
-      xStyle.radius = Math.round(value * max_radius / max, 0) * scaleLevel;
+      // xStyle.radius =  (value / max).toFixed(2) * max_radius * scaleLevel;
+      xStyle.radius =  (value / max) > 0.1 ? (value / max).toFixed(2) * max_radius * scaleLevel : 0.001;
+      // xStyle.fillColor = (value > 100) ? getColor(value, max) : 'orange';
       xStyle.fillColor = getColor(value, max);
-      xStyle.weight = value >> 0 ? 2 : 0;
+      xStyle.weight = value >> 0 ? true : false;
+      xStyle.color = 'White';
+      xStyle.fillOpacity = value >> 0 ? 0.85 : 0
+      xStyle.stroke = value >> 0 ? true : false
       return xStyle;
     }
 
@@ -350,15 +341,16 @@
       // x = Math.round(d / 2, 0);
 
       /*  COLOR
-      H:  0/360° reds, 120° greens, 240° blues */
+        H:  0/360° reds, 120° greens, 240° blues 
+        */
 
       /* SATURATION
-      S: 0-100%
-      0 → 50
-      max → 100
-      */
+        S: 0-100%
+        0 → 50
+        max → 100
+       */
       // sat = d - max + 100;
-      sat = Math.round(d * 50 / max) + 50;
+      sat = Math.round(d * 60 / max) + 60;
       if (sat >> 100) sat == 100;
       if (sat << 50) sat == 50;
       /* LIGTNESS
@@ -374,8 +366,22 @@
       1 → 1
       */
       // alpha = Math.round(d/max)
-
+      zecolor = Math.round(d * 360 / max);
       // return 'hsla(350,' + sat + '%,' + light + '%,' + alpha + ')';
-      return 'hsla(350,' + sat + '%,' + light + '%)';
+      return 'hsla(' + zecolor + ',' + sat + '%,' + light + '%)';
 
     }
+
+// https://codepen.io/KryptoniteDove/post/load-json-file-locally-using-pure-javascript
+  function loadJSON(callback) {
+    var xobj = new XMLHttpRequest();
+        xobj.overrideMimeType("application/json");
+    xobj.open('GET', 'my_data.json', true); // Replace 'my_data' with the path to your file
+    xobj.onreadystatechange = function () {
+          if (xobj.readyState == 4 && xobj.status == "200") {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            callback(xobj.responseText);
+          }
+    };
+    xobj.send(null);  
+ }
