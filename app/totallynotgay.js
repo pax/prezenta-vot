@@ -107,7 +107,8 @@
         '</div>' +
         '<div class="formControl"><div id="xzoom" class="controlItem"><span class="title">Scale</span><span class="button" id="zoomin">+</span><span class="button" id="zoomout">-</span>  </div></div>' +
         '<!--<div class="formControl"><div id="diff" class="controlItem"><span id="dead" data-target="diff" class="button btn-toggle">show diff</span></div></div>-->' +
-        '<!--<div class="controlItem legenda"><small><span><b>LS</b>: listă specială,</span><span><b>LP</b>: listă permanentă,</span><span><b>UM</b>: urnă mobilă, </span><span><b>LT</b>: total voturi</span><span><b>MV</b>: monitorizare vot</span></small></div></div>-->';
+        '<!--<div class="controlItem legenda"><small><span><b>LS</b>: listă specială,</span><span><b>LP</b>: listă permanentă,</span><span><b>UM</b>: urnă mobilă, </span><span><b>LT</b>: total voturi</span><span><b>MV</b>: monitorizare vot</span></small></div>-->' + 
+        '</div><a id="mobileMenu" onclick="document.querySelector(\'.leaflet-control-container\').classList.toggle(\'show\')">MENU</a>';
     };
     controlBox.addTo(map);
     /*end info bpx*/

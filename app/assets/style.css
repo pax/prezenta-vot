@@ -28,12 +28,8 @@ body {
   /*padding: 1ex;*/
 }
 
-#topControl {
-/*  position: absolute;
-  top: 1ex;
-  right: 1ex;
-  z-index: 99;*/
-  /*max-width: 9em;*/
+.mapControl #mobileMenu{
+display: none;
 }
 
 #topControl .formControl {
@@ -44,7 +40,9 @@ body {
 
 #controlInfo {
   font-size: 12px;
-  position: absolute; z-index: 999; left: 40vw; top: 0; background-color: Yellow;
+  position: absolute; z-index: 999; left: 40vw; top: 0;
+  opacity: .5;
+  /*background-color: Yellow;*/
   /*display: none;*/
 }
 
@@ -210,18 +208,60 @@ body {
   font-size: 2.3em;
 }
 
-
 /*
   GO RESPONSIVE
 */
 
 @media screen and (max-width: 680px) {
+  .mapControl #mobileMenu {
+    display: block;
+    color: White;
+  }
+  .mapControl.leaflet-control #mobileMenu:before{
+      content: '\2630 ';
+      margin-right: .5ex;
+    }
+  .leaflet-control-container.show #mobileMenu {
+    border:1px dashed rgba(255,255,255,.5);  
+    padding: .5ex;
+    margin-top: .5ex;
+    display: inline-block; 
+    float: right;
+    position: relative;
 
-  #scaleWrapper,
+  }
+  .leaflet-control-container.show #mobileMenu:before{
+      content: '\274C close ';  top: 1ex; 
+    }
+  #topControl {
+    display: none;
+  }
+  .leaflet-control-container.show  #topControl {
+    display: inline;
+  }
+.leaflet-control-container .leaflet-top.leaflet-right {
+  width: 100%;
+  margin: 0;
+}
+.leaflet-top.leaflet-right .mapControl {
+  margin: 0;
+  padding: 1.5ex;
+  background-color: rgba(0,0,0,.7);  !important;
+  display: inline-block !important;
+  font-size: 16px;
+}
+ .mapControl .formControl {
+  display: inline  !important;
+  margin-right: 1ex;
+ }
+#topControl .controlItem {
+  display: inline-block;
+  margin: 1px;
+}
   .leaflet-control-attribution,
-  .controlItem.legenda,
+  /*.controlItem.legenda,*/
   .mapTitle,
-  #timestamp,
+  /*#timestamp,*/
   .formControl .title  {
     display: none !important;
   }
