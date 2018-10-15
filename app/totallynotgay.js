@@ -167,7 +167,7 @@
       switch (selectedVar) {
         case 'prezenta':
           value = feature.props.ts[selectedTs]['LT'] / feature.props.pe_lista;
-          max = 10;
+          max = 2.5;
           break;
         case 'dead':
           value = feature.props.ts[selectedTs]['LT'] == 0 ? 5 : 0;
