@@ -69,7 +69,7 @@
       return this._div;
     };
     titleBox.addTo(map);
-     
+
 
     /* info box
     - - - - - - - - - - - - - - - - - - - - -  */
@@ -97,7 +97,7 @@
         '</div>' +
         '<div id="varSwitch"  class="formControl"><span class="title">Vars</span>' +
         '<div class="controlItem"><span id="prezenta" data-target="xvar" class="button btn-toggle">prezență</span></div>' +
-        '<div class="controlItem"><span id="LS" data-target="xvar" class="button btn-toggle clicked">liste speciale</span></div>' +
+        '<div class="controlItem"><span id="LS" data-target="xvar" class="button btn-toggle clicked">liste suplimentare</span></div>' +
         '<div class="controlItem"><span id="LP" data-target="xvar" class="button btn-toggle">liste permanente</span></div>' +
         '<div class="controlItem"><span id="UM" data-target="xvar" class="button btn-toggle">urne mobile</span></div>' +
         '<div class="controlItem"><span id="LT" data-target="xvar" class="button btn-toggle">total voturi</span></div>' +
@@ -107,7 +107,7 @@
         '</div>' +
         '<div class="formControl"><div id="xzoom" class="controlItem"><span class="title">Scale</span><span class="button" id="zoomin">+</span><span class="button" id="zoomout">-</span>  </div></div>' +
         '<!--<div class="formControl"><div id="diff" class="controlItem"><span id="dead" data-target="diff" class="button btn-toggle">show diff</span></div></div>-->' +
-        '<!--<div class="controlItem legenda"><small><span><b>LS</b>: listă specială,</span><span><b>LP</b>: listă permanentă,</span><span><b>UM</b>: urnă mobilă, </span><span><b>LT</b>: total voturi</span><span><b>MV</b>: monitorizare vot</span></small></div>-->' + 
+        '<!--<div class="controlItem legenda"><small><span><b>LS</b>: listă specială,</span><span><b>LP</b>: listă permanentă,</span><span><b>UM</b>: urnă mobilă, </span><span><b>LT</b>: total voturi</span><span><b>MV</b>: monitorizare vot</span></small></div>-->' +
         '</div><a id="mobileMenu" onclick="document.querySelector(\'.leaflet-control-container\').classList.toggle(\'show\')">MENU</a>';
     };
     controlBox.addTo(map);
@@ -282,7 +282,7 @@
     function locationProfie(xjson, prezenta) {
       // return JSON.stringify(xjson);
       let xout = '<div class="locBadge">';
-      xout += '<table ><thead><tr> <th>tstamp</th><th>LP</th><th>LS</th><th>UM</th><th>LT</th><th>prezență</th></tr></thead><tbody>';
+      xout += '<table ><thead><tr> <th>tstamp</th><th>LP</th><th>LS</th><th>UM</th><th>LT</th><th>LS/LP</th><th>prezență</th></tr></thead><tbody>';
 
       let svgplotLS = '';
       let svgplotLT = '';
@@ -297,7 +297,8 @@
           xout += " <td class=x" + xjson[timestamp]['LS'] + ">" + xjson[timestamp]['LS'] + '</td>';
           xout += " <td class=x" + xjson[timestamp]['UM'] + ">" + xjson[timestamp]['UM'] + '</td>';
           xout += " <td class=x" + xjson[timestamp]['LT'] + ">" + xjson[timestamp]['LT'] + '</td>';
-          xout += " <td class='prezenta x" + xjson[timestamp]['LT'] + "'>" + (xjson[timestamp]['LT'] * 100 / prezenta).toFixed(1) + '<small>&#37;</small></td>';
+          xout += " <td>" + (xjson[timestamp]['LS'] * 100 / xjson[timestamp]['LP']).toFixed(1) + '<small>&#37;</small></td>';
+          xout += " <td>" + (xjson[timestamp]['LT'] * 100 / prezenta).toFixed(1) + '<small>&#37;</small></td>';
           xout += '</tr>';
           svgdataLS[timestamp] = xjson[timestamp]['LS'];
           svgdataPrez[timestamp] =(xjson[timestamp]['LT'] * 1000 / prezenta).toFixed(0)
@@ -319,7 +320,7 @@
         beforeLS = Number(svgdataLS[oneTs]);
         ii++;
       }
-      svgplotLS = '<svg viewBox="0 0 300 140"  width="140" height="100" class="xchart"><g class="labels x-labels"><text x="5" y="5" class="label-title">Liste speciale</text></g><polyline fill="none" stroke="red" stroke-width="4" points=" ' + svgplotLS + '"/></svg>';
+      svgplotLS = '<svg viewBox="0 0 300 140"  width="140" height="100" class="xchart"><g class="labels x-labels"><text x="5" y="5" class="label-title">Liste suplimentare</text></g><polyline fill="none" stroke="red" stroke-width="4" points=" ' + svgplotLS + '"/></svg>';
 
       ii = 0;
       let beforeLT = 0;
@@ -342,7 +343,7 @@
       // x = Math.round(d / 2, 0);
 
       /*  COLOR
-        H:  0/360° reds, 120° greens, 240° blues 
+        H:  0/360° reds, 120° greens, 240° blues
         */
 
       /* SATURATION
@@ -384,5 +385,5 @@
             callback(xobj.responseText);
           }
     };
-    xobj.send(null);  
+    xobj.send(null);
  }
