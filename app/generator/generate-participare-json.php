@@ -2,7 +2,7 @@
 <?php
 $rustart = getrusage();
 require('functions.php');
-$source_csv_dir='../../data/sources/';
+$source_csv_dir='../../data/sources/referendum-2018/';
 $target_json='../../data/generated/participare.json';
 $timestamps_index='../../data/generated/timestamps.json';
 
