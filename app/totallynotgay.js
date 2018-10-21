@@ -98,39 +98,41 @@ document.body.appendChild(stylesheet);
   controlBox.update = function(props) {
     this._div.innerHTML =
       '<div id="topControl">' +
-      '<div id="timestamp" class="formControl"><span class="title">Timestamps</span>' +
-      '<div id="wrapper_06_10"class="controlItem"><span id="06_10" data-target="ts" class="button btn-toggle tooltip" tooltip="6 oct, ora 10">S @10</span></div>' +
-      '<div id="wrapper_06_13"class="controlItem"><span id="06_13" data-target="ts" class="button btn-toggle tooltip" tooltip="6 oct, ora 13">S @13</span></div>' +
-      '<div id="wrapper_06_16"class="controlItem"><span id="06_16" data-target="ts" class="button btn-toggle tooltip" tooltip="6 oct, ora 16">S @16</span></div>' +
-      '<div id="wrapper_06_19"class="controlItem"><span id="06_19" data-target="ts" class="button btn-toggle tooltip" tooltip="6 oct, ora 19">S @19</span></div>' +
-      '<div id="wrapper_06_21"class="controlItem"><span id="06_21" data-target="ts" class="button btn-toggle tooltip" tooltip="6 oct, ora 21">S @21</span></div>' +
-      '<div id="wrapper_07_10"class="controlItem"><span id="07_10" data-target="ts" class="button btn-toggle tooltip" tooltip="7 oct, ora 10">D @10</span></div>' +
-      '<div id="wrapper_07_13"class="controlItem"><span id="07_13" data-target="ts" class="button btn-toggle tooltip" tooltip="7 oct, ora 13">D @13</span></div>' +
-      '<div id="wrapper_07_16"class="controlItem"><span id="07_16" data-target="ts" class="button btn-toggle tooltip" tooltip="7 oct, ora 16">D @16</span></div>' +
-      '<div id="wrapper_07_19"class="controlItem"><span id="07_19" data-target="ts" class="button btn-toggle tooltip" tooltip="7 oct, ora 19">D @19</span></div>' +
-      '<div id="wrapper_07_21"class="controlItem"><span id="07_21" data-target="ts" class="button btn-toggle tooltip clicked" tooltip="7 oct, ora 21">D @21</span></div>' +
-      '</div>' +
-      '<div id="varSwitch"  class="formControl">'+
-        '<span class="title">Vars</span>' +
-        '<div id="wrapper_prezenta"class="controlItem"><span id="prezenta" data-target="xvar" class="button btn-toggle tooltip" tooltip="prezență de peste 50% (voturi pe lista permanentă / nr alegători înscriși)">prezență</span></div>' +
-        '<div id="wrapper_LS"class="controlItem"><span id="LS" data-target="xvar" class="button btn-toggle tooltip clicked" tooltip="voturi pe lista suplimentară">liste suplimentare</span></div>' +
-        '<div id="wrapper_LP"class="controlItem"><span id="LP" data-target="xvar" class="button btn-toggle tooltip" tooltip="voturi pe lista permanentă">liste permanente</span></div>' +
-        '<div id="wrapper_UM"class="controlItem"><span id="UM" data-target="xvar" class="button btn-toggle tooltip" tooltip="voturi cu urnă mobilă">urne mobile</span></div>' +
-        '<div id="wrapper_LT"class="controlItem"><span id="LT" data-target="xvar" class="button btn-toggle" >total voturi</span></div>' +
-        '<div id="wrapper_ghost"class="controlItem"><span id="ghost" data-target="xvar" class="button btn-toggle tooltip" tooltip="secții cu mai puțin de 5 voturi">&lt; 5 voturi</span></div>' +
-        '<div id="wrapper_dead"class="controlItem"><span id="dead" data-target="xvar" class="button btn-toggle tooltip" tooltip="secții unde nu s-a înregistrat niciun vot">niciun vot</span></div>' +
-      '</div>' +
-      '<div class="formControl">' +
-      '<div id="xzoom" class="controlItem">' +
-      '<span class="title">Scale</span>' +
-      '<span class="button" id="zoomin">+</span>' +
-      '<span class="button" id="zoomout">-</span>' +
-      '</div>' +
-      '</div>' +
-      '<div id="maptype" class="formControl">' +
-      '<span class="title">Mod afișare</span>' +
-       '<div id="wrapper_showabs"class="controlItem"><span id="showabs"  data-target="showdiff" class="button btn-toggle tooltip clicked" tooltip="valori absolute" >abs</span></div>' +
-       '<div id="wrapper_showdiff"class="controlItem"><span id="showdiff" data-target="showdiff" class="button btn-toggle tooltip" tooltip="creșterile de la un moment la altul">diff</span></div>' +
+        '<div id="timestamp" class="formControl">'+
+          '<span class="title">Timestamps</span>' +
+          '<div id="wrapper_06_10"class="controlItem"><span id="06_10" data-target="ts" class="button btn-toggle tooltip" tooltip="6 oct, ora 10">S @10</span></div>' +
+          '<div id="wrapper_06_13"class="controlItem"><span id="06_13" data-target="ts" class="button btn-toggle tooltip" tooltip="6 oct, ora 13">S @13</span></div>' +
+          '<div id="wrapper_06_16"class="controlItem"><span id="06_16" data-target="ts" class="button btn-toggle tooltip" tooltip="6 oct, ora 16">S @16</span></div>' +
+          '<div id="wrapper_06_19"class="controlItem"><span id="06_19" data-target="ts" class="button btn-toggle tooltip" tooltip="6 oct, ora 19">S @19</span></div>' +
+          '<div id="wrapper_06_21"class="controlItem"><span id="06_21" data-target="ts" class="button btn-toggle tooltip" tooltip="6 oct, ora 21">S @21</span></div>' +
+          '<div id="wrapper_07_10"class="controlItem"><span id="07_10" data-target="ts" class="button btn-toggle tooltip" tooltip="7 oct, ora 10">D @10</span></div>' +
+          '<div id="wrapper_07_13"class="controlItem"><span id="07_13" data-target="ts" class="button btn-toggle tooltip" tooltip="7 oct, ora 13">D @13</span></div>' +
+          '<div id="wrapper_07_16"class="controlItem"><span id="07_16" data-target="ts" class="button btn-toggle tooltip" tooltip="7 oct, ora 16">D @16</span></div>' +
+          '<div id="wrapper_07_19"class="controlItem"><span id="07_19" data-target="ts" class="button btn-toggle tooltip" tooltip="7 oct, ora 19">D @19</span></div>' +
+          '<div id="wrapper_07_21"class="controlItem"><span id="07_21" data-target="ts" class="button btn-toggle tooltip clicked" tooltip="7 oct, ora 21">D @21</span></div>' +
+        '</div>' +
+        '<div id="varSwitch"  class="formControl">'+
+          '<span class="title">Vars</span>' +
+          '<div id="wrapper_prezenta"class="controlItem"><span id="prezenta" data-target="xvar" class="button btn-toggle tooltip" tooltip="prezență de peste 50% (voturi pe lista permanentă / nr alegători înscriși)">prezență</span></div>' +
+          '<div id="wrapper_LS"class="controlItem"><span id="LS" data-target="xvar" class="button btn-toggle tooltip clicked" tooltip="voturi pe lista suplimentară">liste suplimentare</span></div>' +
+          '<div id="wrapper_LP"class="controlItem"><span id="LP" data-target="xvar" class="button btn-toggle tooltip" tooltip="voturi pe lista permanentă">liste permanente</span></div>' +
+          '<div id="wrapper_UM"class="controlItem"><span id="UM" data-target="xvar" class="button btn-toggle tooltip" tooltip="voturi cu urnă mobilă">urne mobile</span></div>' +
+          '<div id="wrapper_LT"class="controlItem"><span id="LT" data-target="xvar" class="button btn-toggle" >total voturi</span></div>' +
+          '<div id="wrapper_ghost"class="controlItem"><span id="ghost" data-target="xvar" class="button btn-toggle tooltip" tooltip="secții cu mai puțin de 5 voturi">&lt; 5 voturi</span></div>' +
+          '<div id="wrapper_dead"class="controlItem"><span id="dead" data-target="xvar" class="button btn-toggle tooltip" tooltip="secții unde nu s-a înregistrat niciun vot">niciun vot</span></div>' +
+        '</div>' +
+        '<div class="formControl">' +
+          '<div id="xzoom" class="controlItem">' +
+            '<span class="title">Scale</span>' +
+            '<span class="button" id="zoomin">+</span>' +
+            '<span class="button" id="zoomout">-</span>' +
+          '</div>' +
+        '</div>' +
+        '<div id="maptype" class="formControl">' +
+          '<span class="title">Mod afișare</span>' +
+          '<div id="wrapper_showabs"class="controlItem"><span id="showabs"  data-target="showdiff" class="button btn-toggle tooltip clicked" tooltip="valori absolute" >abs</span></div>' +
+          '<div id="wrapper_showdiff"class="controlItem"><span id="showdiff" data-target="showdiff" class="button btn-toggle tooltip" tooltip="creșterile de la un moment la altul">diff</span></div>' +
+        '</div>' +
       '</div>' +
       '<a id="mobileMenu" onclick="document.querySelector(\'.leaflet-control-container\').classList.toggle(\'show\')">MENU</a>';
   };
