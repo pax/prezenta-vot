@@ -113,7 +113,7 @@ document.body.appendChild(stylesheet);
         '</div>' +
         '<div id="varSwitch"  class="formControl">'+
           '<span class="title">Vars</span>' +
-          '<div id="wrapper_prezenta"class="controlItem"><span id="prezenta" data-target="xvar" class="button btn-toggle tooltip" tooltip="prezență de peste 50% (voturi pe lista permanentă / nr alegători înscriși)">prezență</span></div>' +
+          '<div id="wrapper_prezenta"class="controlItem"><span id="prezenta" data-target="xvar" class="button btn-toggle tooltip" tooltip="prezență de peste 50% (voturi totale / numărul alegatorilor din listele permanente))">prezență ridicată</span></div>' +
           '<div id="wrapper_LS"class="controlItem"><span id="LS" data-target="xvar" class="button btn-toggle tooltip clicked" tooltip="voturi pe lista suplimentară">liste suplimentare</span></div>' +
           '<div id="wrapper_LP"class="controlItem"><span id="LP" data-target="xvar" class="button btn-toggle tooltip" tooltip="voturi pe lista permanentă">liste permanente</span></div>' +
           '<div id="wrapper_UM"class="controlItem"><span id="UM" data-target="xvar" class="button btn-toggle tooltip" tooltip="voturi cu urnă mobilă">urne mobile</span></div>' +
@@ -131,7 +131,7 @@ document.body.appendChild(stylesheet);
         '<div id="maptype" class="formControl">' +
           '<span class="title">Mod afișare</span>' +
           '<div id="wrapper_showabs"class="controlItem"><span id="showabs"  data-target="showdiff" class="button btn-toggle tooltip clicked" tooltip="valori absolute" >abs</span></div>' +
-          '<div id="wrapper_showdiff"class="controlItem"><span id="showdiff" data-target="showdiff" class="button btn-toggle tooltip" tooltip="creșterile de la un moment la altul">diff</span></div>' +
+          '<div id="wrapper_showdiff"class="controlItem"><span id="showdiff" data-target="showdiff" class="button btn-toggle tooltip" tooltip="creșterile semnificative față de raportarea anterioară">diff</span></div>' +
         '</div>' +
       '</div>' +
       '<a id="mobileMenu" onclick="document.querySelector(\'.leaflet-control-container\').classList.toggle(\'show\')">MENU</a>';
@@ -231,7 +231,7 @@ document.body.appendChild(stylesheet);
         default:
           value = feature.props.ts[selectedTs][selectedVar];
           max = 1000;
-          alert('unknown selected var');
+          // alert('unknown selected var');
       }
     } else {
       // SHOW DELTA
@@ -255,7 +255,7 @@ document.body.appendChild(stylesheet);
             max = 330;
             break;
           default:
-            alert('unknown selected var');
+            // alert('unknown selected var');
         }
       }
     }
