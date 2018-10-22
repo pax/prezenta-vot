@@ -9,7 +9,7 @@ $rustart = getrusage();
     CONSTANTS
 */
 
-$participare_json='../../data/generated/participare.json';
+$participare_json='../../data/generated/participare-sectii.json';
 $gis_csv='../../data/gis/ro_localitati_punct-min.csv';
 $target_json='../../data/generated/sectii.json';
 $prezenta_observatori='../../data/observatori.csv';

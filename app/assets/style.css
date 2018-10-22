@@ -214,7 +214,7 @@ display: none;
 .tooltip:hover:before {
   content: attr(tooltip);
   position: absolute;
-  max-width: 7em;
+  max-width: 8.5em;
   margin-left: -7.5em;
   margin-top: -1ex;
   background-color: #666;
