@@ -2,7 +2,7 @@ body {
   font-family: sans-serif;
   margin: 0;
   padding: 0;
-  background-image: url("img/loader-bcg.gif");
+  /*background-image: url("img/loader-bcg.gif");*/
   /*background-image: url('img/bcg-noise-1.png');*/
 }
 
@@ -43,7 +43,7 @@ display: none;
   position: absolute; z-index: 999; left: 40vw; top: 0;
   opacity: .5;
   /*background-color: Yellow;*/
-  /*display: none;*/
+  display: none;
 }
 
 #scale {
