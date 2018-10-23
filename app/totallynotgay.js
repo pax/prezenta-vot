@@ -76,14 +76,14 @@ document.body.appendChild(stylesheet);
   scaleLevel = document.getElementById('controlInfo').getAttribute("range");
   varmode = document.getElementById('controlInfo').getAttribute("showdiff");
 
-  var titleBox = L.control({ position: 'topleft' });
-  titleBox.onAdd = function(map) {
-    this._div = L.DomUtil.create('div', 'mapTitle');
-    this._div.innerHTML = "<h1>Prezența la vot la referendumul pentru modificarea Constituției.</h1> <span> &larr; <a target='_blank' href='https://votcorect.ro'>votcorect.ro</a> / sursă date : <a target='_blank' href='https://prezenta.bec.ro'>BEC</a> </span>";
-    // this.update();
-    return this._div;
-  };
-  titleBox.addTo(map);
+  // var titleBox = L.control({ position: 'topleft' });
+  // titleBox.onAdd = function(map) {
+  //   this._div = L.DomUtil.create('div', 'mapTitle');
+  //   this._div.innerHTML = "<h1>Prezența la vot la referendumul pentru modificarea Constituției.</h1> <span> &larr; <a target='_blank' href='https://votcorect.ro'>votcorect.ro</a> / sursă date : <a target='_blank' href='https://prezenta.bec.ro'>BEC</a> </span>";
+  //   // this.update();
+  //   return this._div;
+  // };
+  // titleBox.addTo(map);
 
 
   /* info box
