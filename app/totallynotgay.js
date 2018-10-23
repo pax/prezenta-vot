@@ -60,7 +60,7 @@ document.body.appendChild(stylesheet);
   judeteShape.addTo(map);
 
   // map.addLayer(markers);
-  map.attributionControl.addAttribution("<b>Sursă date</b>: <a target='_blank' href='https://prezenta.bec.ro'>Biroul Electoral Central</a>");
+  map.attributionControl.addAttribution("<a href='https://votcorect.ro' target='_blank'><b>votcorect.ro</b></a> | Sursă date: <a target='_blank' href='https://prezenta.bec.ro'>Biroul Electoral Central</a>");
 
   // L.tileLayer.provider('Esri.WorldTopoMap').addTo(map);
   // L.tileLayer.provider('Esri.WorldTerrain').addTo(map);
