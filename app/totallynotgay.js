@@ -64,7 +64,7 @@ document.body.appendChild(stylesheet);
 
   // L.tileLayer.provider('Esri.WorldTopoMap').addTo(map);
   // L.tileLayer.provider('Esri.WorldTerrain').addTo(map);
-  L.tileLayer.provider('CartoDB.Positron').addTo(map);
+    // L.tileLayer.provider('CartoDB.Positron').addTo(map);
   // L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(map);
   // L.tileLayer.provider('OpenTopoMap').addTo(map);
   // L.tileLayer.provider('Stamen.Watercolor').addTo(map);
