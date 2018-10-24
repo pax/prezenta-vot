@@ -246,6 +246,10 @@ document.body.appendChild(stylesheet);
             value = feature.props.ts[selectedTs]['LP'] - feature.props.ts[previousTS]['LP'];
             max = 500;
             break;
+          case 'LT':
+            value = feature.props.ts[selectedTs]['LT'] - feature.props.ts[previousTS]['LT'];
+            max = 450;
+            break;
           case 'LS':
             value = feature.props.ts[selectedTs]['LS'] - feature.props.ts[previousTS]['LS'];
             max = 300;
