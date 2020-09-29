@@ -1,11 +1,4 @@
-.github
-.editorconfig
-
 *_obsolete*
-_obsolete
-_test
 *_test*
-data/sources/
-*/vendor/*
-.htaccess
-*.htaccess*
+*__pycache__*
+*.vscode*

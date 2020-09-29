@@ -91,7 +91,7 @@ document.body.appendChild(stylesheet);
 
   var controlBox = L.control({ position: 'topright' });
   controlBox.onAdd = function(map) {
-    this._div = L.DomUtil.create('div', 'controlBoxBox mapControl');
+    this._div = L.DomUtil.create('div', 'controlBox mapControl');
     this.update();
     return this._div;
   };
@@ -285,7 +285,7 @@ document.body.appendChild(stylesheet);
     var out = "<header><strong>" + feature.props.nume + "</strong>, ";
     out += "" + feature.props.localitate + " – " + feature.props.jud + feature.props.nr + "<br/>Înscriși pe lista: <b>" + feature.props.pe_lista + "</b></header>";
     // out += JSON.stringify(feature.props.ts, null, 2)
-    out += locationProfie(feature.props.ts, feature.props.pe_lista);
+    out += locationProfile(feature.props.ts, feature.props.pe_lista);
     var popupContent = out;
 
     marker.bindPopup(popupContent, {
@@ -338,7 +338,7 @@ document.body.appendChild(stylesheet);
     document.getElementsByTagName("BODY")[0].className='ts_' + selectedTs + ' var_' + selectedVar + ' mode_' + varmode;
   }
 
-  function locationProfie(xjson, prezenta) {
+  function locationProfile(xjson, prezenta) {
     // return JSON.stringify(xjson);
     let xout = '<div class="locBadge">';
     xout += '<table><thead><tr> <th>tstamp</th><th>LP</th><th>LS</th><th>UM</th><th>LT</th><th>LS/LP</th><th>prezență</th></tr></thead><tbody>';

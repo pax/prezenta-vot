@@ -1,6 +1,6 @@
 ## Vizualizare prezență vot
 
-&rarr; [votcorect.ro/prezenta-vot](https://votcorect.ro/prezenta-vot) [[mirror](https://pax.github.io/prezenta-vot)], sursă date: [bec.ro](http://prezenta.bec.ro)
+&rarr; [votcorect.ro/prezenta-vot](https://votcorect.ro/prezenta-vot) [[mirror](https://statistici-electorale.github.io/prezenta-vot-2018)], sursă date: [bec.ro](http://prezenta.bec.ro)
 
 
 ![screenshot](app/assets/img/screenshot.png)

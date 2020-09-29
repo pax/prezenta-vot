@@ -2,7 +2,8 @@
 <?php
 $rustart = getrusage();
 require('functions.php');
-$source_csv_dir='../../data/sources/referendum-2018/';
+// $source_csv_dir='../../data/sources/referendum-2018/';
+$source_csv_dir='../../data/sources/parlamentare-eu-2019/';
 $target_json='../../data/generated/participare-sectii.json';
 $timestamps_index='../../data/generated/timestamps.json';
 
